@@ -1,0 +1,42 @@
+<div class="steps-container">
+  <nav class="steps-nav">
+    <div>
+      <a routerLink='/' class="header-text">Корпус</a>
+      <ul class="navigation-list">
+        <li *ngFor="let rootItem of campuses" class="navigation-item">
+          <a [routerLink]="'/'+ encodeURI(rootItem.name)" routerLinkActive="active active-campus">{{rootItem.name}}</a>
+        </li>
+      </ul>
+    </div>
+
+    <ng-container *ngIf="selectedCampus !== null">
+      <div>
+        <a [routerLink]='"/" + encodeURI(selectedCampus.name)' class="header-text">Поверх</a>
+        <ul class="navigation-list">
+          <li *ngFor="let floor of selectedCampus.children" class="navigation-item">
+            <a [routerLink]='"/" + encodeURI(selectedCampus.name) + "/" + encodeURI(floor.name)'
+               routerLinkActive="active active-floor">{{floor.name}}</a>
+          </li>
+        </ul>
+      </div>
+
+      <ng-container *ngIf="selectedFloor !== null">
+        <div>
+          <a [routerLink]='"/" + encodeURI(selectedCampus.name) + "/" + encodeURI(selectedFloor.name)'
+             class="header-text">ПК</a>
+          <ul class="navigation-list">
+            <li *ngFor="let pc of selectedFloor.children" class="navigation-item">
+              <a
+                [routerLink]='"/" + encodeURI(selectedCampus.name) + "/" + encodeURI(selectedFloor.name) + "/" + encodeURI(pc.name)'
+                routerLinkActive="active active-pc">{{pc.name}}</a>
+            </li>
+          </ul>
+        </div>
+      </ng-container>
+    </ng-container>
+  </nav>
+
+  <main *ngIf="selectedPC !== null">
+    Data for PC: {{ selectedPC.name}}
+  </main>
+</div>
