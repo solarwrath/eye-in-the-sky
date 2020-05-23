@@ -1,0 +1,57 @@
+<div class="steps-container">
+  <nav class="steps-nav">
+    <div style="display: flex;flex-direction: column">
+      <a routerLink='/' class="header-text">Корпус</a>
+      <div *ngIf="selectedCampus !== null">
+        {{selectedCampus.name}}
+        <button (click)="clearSelectedCampus()">Clear</button>
+      </div>
+      <ng-scrollbar>
+        <ul class="navigation-list">
+          <li *ngFor="let campus of campuses" class="navigation-item">
+            <a (click)="onCampusSelect($event, campus)"
+               routerLinkActive="active active-campus">{{campus.name}}</a>
+          </li>
+        </ul>
+      </ng-scrollbar>
+    </div>
+
+    <ng-container *ngIf="selectedCampus !== null">
+      <div>
+        <a [routerLink]='"/" + encodeURI(selectedCampus.name)' class="header-text">Поверх</a>
+        <ng-scrollbar style="max-height: 400px;">
+          <ul class="navigation-list">
+            <li *ngFor="let floor of selectedCampus.children" class="navigation-item">
+              <a [routerLink]='"/" + encodeURI(selectedCampus.name) + "/" + encodeURI(floor.name)'
+                 routerLinkActive="active active-floor">{{floor.name}}</a>
+            </li>
+          </ul>
+        </ng-scrollbar>
+      </div>
+
+      <ng-container *ngIf="selectedFloor !== null">
+        <div>
+          <a [routerLink]='"/" + encodeURI(selectedCampus.name) + "/" + encodeURI(selectedFloor.name)'
+             class="header-text">ПК</a>
+          <ng-scrollbar style="max-height: 400px;">
+            <ul class="navigation-list">
+              <li *ngFor="let pc of selectedFloor.children" class="navigation-item">
+                <a
+                  [routerLink]='"/" + encodeURI(selectedCampus.name) + "/" + encodeURI(selectedFloor.name) + "/" + encodeURI(pc.name)'
+                  routerLinkActive="active active-pc">{{pc.name}}</a>
+              </li>
+            </ul>
+          </ng-scrollbar>
+        </div>
+      </ng-container>
+    </ng-container>
+  </nav>
+
+  <main *ngIf="selectedPC !== null">
+    Data for PC: {{ selectedPC.name}}
+  </main>
+</div>
+
+<svg class="background">
+  <path #activePath id="activePath" stroke="green" d="" fill="none" [hidden]="firstTimeActivePathShown"></path>
+</svg>

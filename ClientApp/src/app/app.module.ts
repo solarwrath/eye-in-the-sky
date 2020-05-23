@@ -1,34 +1,23 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
 
-import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
-import {ScrollingModule} from '@angular/cdk/scrolling';
-import { NgScrollbarModule } from 'ngx-scrollbar';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
+import {MainComponent} from './main/main.component';
+import {NgScrollbarModule} from 'ngx-scrollbar';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
+    MainComponent
   ],
   imports: [
-    BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
-    HttpClientModule,
-    FormsModule,
-    RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: ':campus/:floor/:pc', component: HomeComponent},
-      { path: ':campus/:floor', component: HomeComponent},
-      { path: ':campus', component: HomeComponent},
-      { path: '**', component: HomeComponent}
-    ]),
-    ScrollingModule,
-    NgScrollbarModule
+    BrowserModule,
+    AppRoutingModule,
+    NgScrollbarModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
