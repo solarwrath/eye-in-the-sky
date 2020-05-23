@@ -118,11 +118,6 @@ export class MainComponent implements OnInit {
     const rootB = new MenuItem({title: 'rootOptionB'});
 
     this.campuses = [rootA, rootB];
-
-    for (let i = 0; i < 100; i++) {
-      this.campuses.push(new MenuItem({title: `${i}`}));
-    }
-
     this.sortCampuses();
 
     this.handleRoute(this.activatedRoute.snapshot.paramMap);
