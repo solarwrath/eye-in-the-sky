@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import Builder from '@rob10e/svg-path-js';
 import anime from 'animejs/lib/anime.es.js';
@@ -14,10 +14,11 @@ export class MainComponent implements OnInit {
   public selectedFloor: MenuItem | null = null;
   public selectedPC: MenuItem | null = null;
 
+  private pathBuilder: Builder = new Builder();
   public firstTimeActivePathShown = true;
 
   @ViewChild('activePath')
-  public activePath: SVGPathElement;
+  public activePath: ElementRef<SVGPathElement>;
 
   constructor(private activatedRoute: ActivatedRoute,
               private router: Router) {
@@ -81,10 +82,7 @@ export class MainComponent implements OnInit {
     this.router.navigate([`/${encodeURI(campus.name)}`]);
 
     const boundingRectangle = event.target.getBoundingClientRect();
-    console.log(boundingRectangle);
-
-    const builder = new Builder();
-    const pathForm = builder
+    const activePathForm = this.pathBuilder
       .moveTo(boundingRectangle.x, boundingRectangle.y)
       .horizontalTo(boundingRectangle.x + 50)
       .verticalTo(boundingRectangle.y + 100)
@@ -92,7 +90,7 @@ export class MainComponent implements OnInit {
 
     // Hack to disable no animation when d is not set
     if (this.firstTimeActivePathShown) {
-      this.activePath.nativeElement.setAttribute('d', pathForm);
+      this.activePath.nativeElement.setAttribute('d', activePathForm);
     }
 
     // This sequencing fixes glitch, during which full pathForm is shown for a couple of frames and then gets animated
@@ -106,14 +104,9 @@ export class MainComponent implements OnInit {
     });
 
     setTimeout(() => {
-      this.activePath.nativeElement.setAttribute('d', pathForm);
+      this.activePath.nativeElement.setAttribute('d', activePathForm);
       this.firstTimeActivePathShown = false;
     }, 0);
-  }
-
-  //TODO Replace with directive
-  public encodeURI(uri: string) {
-    return encodeURI(uri);
   }
 
   ngOnInit(): void {

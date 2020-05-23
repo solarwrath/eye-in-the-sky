@@ -18,11 +18,11 @@
 
     <ng-container *ngIf="selectedCampus !== null">
       <div>
-        <a [routerLink]='"/" + encodeURI(selectedCampus.name)' class="header-text">Поверх</a>
+        <a [routerLink]='[selectedCampus.name]|formEncodedUri' class="header-text">Поверх</a>
         <ng-scrollbar style="max-height: 400px;">
           <ul class="navigation-list">
             <li *ngFor="let floor of selectedCampus.children" class="navigation-item">
-              <a [routerLink]='"/" + encodeURI(selectedCampus.name) + "/" + encodeURI(floor.name)'
+              <a [routerLink]='[selectedCampus.name, floor.name]|formEncodedUri'
                  routerLinkActive="active active-floor">{{floor.name}}</a>
             </li>
           </ul>
@@ -31,13 +31,13 @@
 
       <ng-container *ngIf="selectedFloor !== null">
         <div>
-          <a [routerLink]='"/" + encodeURI(selectedCampus.name) + "/" + encodeURI(selectedFloor.name)'
+          <a [routerLink]='[selectedCampus.name, selectedFloor.name]|formEncodedUri'
              class="header-text">ПК</a>
           <ng-scrollbar style="max-height: 400px;">
             <ul class="navigation-list">
               <li *ngFor="let pc of selectedFloor.children" class="navigation-item">
                 <a
-                  [routerLink]='"/" + encodeURI(selectedCampus.name) + "/" + encodeURI(selectedFloor.name) + "/" + encodeURI(pc.name)'
+                  [routerLink]='[selectedCampus.name, selectedFloor.name, pc.name]|formEncodedUri'
                   routerLinkActive="active active-pc">{{pc.name}}</a>
               </li>
             </ul>
@@ -47,6 +47,7 @@
     </ng-container>
   </nav>
 
+  <!-- is separated here for semantic purposes -->
   <main *ngIf="selectedPC !== null">
     Data for PC: {{ selectedPC.name}}
   </main>
