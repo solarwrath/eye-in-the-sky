@@ -3,9 +3,19 @@
     <div>
       <a routerLink='/' class="header-text">Корпус</a>
       <ul class="navigation-list">
-        <li *ngFor="let rootItem of campuses" class="navigation-item">
+        <ng-scrollbar>
+          <cdk-virtual-scroll-viewport style="height: 500px" itemSize="90" scrollViewport>
+            <ng-container *cdkVirtualFor="let campus of campuses">
+              <li class="navigation-item">
+                <a [routerLink]="'/'+ encodeURI(campus.name)"
+                   routerLinkActive="active active-campus">{{campus.name}}</a>
+              </li>
+            </ng-container>
+          </cdk-virtual-scroll-viewport>
+        </ng-scrollbar>
+        <!--<li *ngFor="let rootItem of campuses" class="navigation-item">
           <a [routerLink]="'/'+ encodeURI(rootItem.name)" routerLinkActive="active active-campus">{{rootItem.name}}</a>
-        </li>
+        </li>-->
       </ul>
     </div>
 

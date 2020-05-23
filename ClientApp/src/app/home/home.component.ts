@@ -53,6 +53,10 @@ export class HomeComponent implements OnInit {
 
     this.campuses = [rootA, rootB];
 
+    for (let i = 0; i < 100; i++) {
+      this.campuses.push(new MenuItem({title: `${i}`}));
+    }
+
     this.handleRoute(this.activatedRoute.snapshot);
     this.activatedRoute.params.subscribe(map => this.handleRoute(map));
   }

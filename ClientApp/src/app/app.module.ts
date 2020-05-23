@@ -6,6 +6,8 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
+import {ScrollingModule} from '@angular/cdk/scrolling';
+import { NgScrollbarModule } from 'ngx-scrollbar';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { HomeComponent } from './home/home.component';
       { path: ':campus/:floor', component: HomeComponent},
       { path: ':campus', component: HomeComponent},
       { path: '**', component: HomeComponent}
-    ])
+    ]),
+    ScrollingModule,
+    NgScrollbarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
