@@ -13,8 +13,6 @@ export class MainComponent implements OnInit {
   public selectedCampus: MenuItem | null = null;
   public selectedFloor: MenuItem | null = null;
   public selectedPC: MenuItem | null = null;
-
-  private pathBuilder: Builder = new Builder();
   public firstTimeActivePathShown = true;
 
   @ViewChild('activePath')
@@ -82,7 +80,7 @@ export class MainComponent implements OnInit {
     this.router.navigate([`/${encodeURI(campus.name)}`]);
 
     const boundingRectangle = event.target.getBoundingClientRect();
-    const activePathForm = this.pathBuilder
+    const activePathForm = new Builder()
       .moveTo(boundingRectangle.x, boundingRectangle.y)
       .horizontalTo(boundingRectangle.x + 50)
       .verticalTo(boundingRectangle.y + 100)
