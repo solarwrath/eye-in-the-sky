@@ -3,12 +3,15 @@
     <div style="display: flex;flex-direction: column">
       <a routerLink='/' class="header-text">Корпус</a>
       <div>
+        {{campusSelectedId|async}}
         Обраний корпус: <span #selectedCampusTitle></span>
       </div>
-      <!-- <div *ngIf="selectedCampus !== null">
+      <!--
+       <div *ngIf="selectedCampus !== null">
          <div style="display: inline-block" [@myAnim]="animState">{{selectedCampus.name}}</div>
          <button (click)="clearSelectedCampus()">Clear</button>
-       </div>-->
+       </div>
+       -->
       <ng-scrollbar>
         <ul class="navigation-list">
           <li *ngFor="let campus of campuses" class="navigation-item">

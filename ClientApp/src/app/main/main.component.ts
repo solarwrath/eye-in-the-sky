@@ -4,40 +4,24 @@ import Builder from '@rob10e/svg-path-js';
 import anime from 'animejs/lib/anime.es.js';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import Typewriter from '../typewriter/typewriter';
+import {CampusState} from '../store/campus.reducer';
+import {Store} from '@ngrx/store';
+import {Observable} from 'rxjs';
+import {tap} from 'rxjs/operators';
+import {addCampus, selectCampus} from '../store/campus.actions';
 
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss'],
-  animations: [
-    trigger('myAnim', [
-      state('coming', style({
-        transform: 'translateX(-150px)',
-        opacity: 0,
-      })),
-      state('normal', style({
-        transform: 'translateX(0)',
-        opacity: 1,
-      })),
-      state('gone', style({
-        transform: 'translateX(150px)',
-        opacity: 0,
-      })),
-      transition('normal => gone', [animate(1500)]),
-      transition('gone => coming', [animate(1)]),
-      transition('coming => normal', [
-        animate(1500, style({
-          transform: 'translateX(-150px)',
-          opacity: 0,
-        }))
-      ]),
-    ])
-  ]
 })
 export class MainComponent implements OnInit, AfterViewInit {
 
+  public campusSelectedId: Observable<number | null> = this.campusStore.select(state => state.selectedCampusId).pipe(tap(a => console.log(a)));
+
   constructor(private activatedRoute: ActivatedRoute,
-              private router: Router) {
+              private router: Router,
+              private campusStore: Store<CampusState>) {
   }
 
   public campuses: MenuItem[];
@@ -84,6 +68,7 @@ export class MainComponent implements OnInit, AfterViewInit {
         const previousSelectedCampus = this.selectedCampus;
 
         this.selectedCampus = this.campuses.splice(this.campuses.findIndex(campus => campus.name === decodedCampusTitle), 1)[0];
+        this.campusStore.dispatch(selectCampus({campusTitle: this.selectedCampus.name}));
 
         if (this.textRotate !== null) {
           this.textRotate.changeText(this.selectedCampus.name);
@@ -162,10 +147,20 @@ export class MainComponent implements OnInit, AfterViewInit {
 
     const rootB = new MenuItem({title: 'rootOptionB'});
 
+    // @ts-ignore
+    this.campusStore.dispatch(addCampus({campus: r  ootA}));
+    // @ts-ignore
+    this.campusStore.dispatch(addCampus({campus: rootB}));
+
     this.campuses = [rootA, rootB];
+
     for (let i = 0; i < 20; i++) {
-      this.campuses.push(new MenuItem({title: `${i}`}));
+      const a = new MenuItem({title: `${i}`});
+      this.campuses.push(a);
+      // @ts-ignore
+      this.campusStore.dispatch(addCampus({campus: a}));
     }
+
     this.sortCampuses();
 
     this.handleRoute(this.activatedRoute.snapshot.paramMap);
