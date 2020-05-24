@@ -34,7 +34,7 @@ export default class Typewriter {
       }
     } else {
       this.currentText = typewriterOptions.initialText || '';
-      this.target.innerHTML = this.constructInnerHtml();
+      this.target.innerText = this.constructInnerText();
     }
   }
 
@@ -62,7 +62,7 @@ export default class Typewriter {
       this.currentText = desiredText.substring(0, this.currentText.length + 1);
     }
 
-    this.target.innerHTML = this.constructInnerHtml();
+    this.target.innerText = this.constructInnerText();
 
     let delta = 300 - Math.random() * 100;
 
@@ -92,7 +92,7 @@ export default class Typewriter {
     this.timeoutSubscriptions.forEach(subscription => clearTimeout(subscription));
   }
 
-  private constructInnerHtml(): string {
-    return `<span class="wrap">${this.currentText}${this.terminalText}</span>`;
+  private constructInnerText(): string {
+    return `${this.currentText}${this.terminalText}`;
   }
 }
