@@ -2,10 +2,13 @@
   <nav class="steps-nav">
     <div style="display: flex;flex-direction: column">
       <a routerLink='/' class="header-text">Корпус</a>
-      <div *ngIf="selectedCampus !== null">
-        {{selectedCampus.name}}
-        <button (click)="clearSelectedCampus()">Clear</button>
+      <div>
+        Обраний корпус: <span #selectedCampusTitle></span>
       </div>
+      <!-- <div *ngIf="selectedCampus !== null">
+         <div style="display: inline-block" [@myAnim]="animState">{{selectedCampus.name}}</div>
+         <button (click)="clearSelectedCampus()">Clear</button>
+       </div>-->
       <ng-scrollbar>
         <ul class="navigation-list">
           <li *ngFor="let campus of campuses" class="navigation-item">

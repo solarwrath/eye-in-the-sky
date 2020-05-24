@@ -1,14 +1,45 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import Builder from '@rob10e/svg-path-js';
 import anime from 'animejs/lib/anime.es.js';
+import {animate, state, style, transition, trigger} from '@angular/animations';
+import Typewriter from '../typewriter/typewriter';
 
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
-  styleUrls: ['./main.component.scss']
+  styleUrls: ['./main.component.scss'],
+  animations: [
+    trigger('myAnim', [
+      state('coming', style({
+        transform: 'translateX(-150px)',
+        opacity: 0,
+      })),
+      state('normal', style({
+        transform: 'translateX(0)',
+        opacity: 1,
+      })),
+      state('gone', style({
+        transform: 'translateX(150px)',
+        opacity: 0,
+      })),
+      transition('normal => gone', [animate(1500)]),
+      transition('gone => coming', [animate(1)]),
+      transition('coming => normal', [
+        animate(1500, style({
+          transform: 'translateX(-150px)',
+          opacity: 0,
+        }))
+      ]),
+    ])
+  ]
 })
-export class MainComponent implements OnInit {
+export class MainComponent implements OnInit, AfterViewInit {
+
+  constructor(private activatedRoute: ActivatedRoute,
+              private router: Router) {
+  }
+
   public campuses: MenuItem[];
   public selectedCampus: MenuItem | null = null;
   public selectedFloor: MenuItem | null = null;
@@ -18,9 +49,12 @@ export class MainComponent implements OnInit {
   @ViewChild('activePath')
   public activePath: ElementRef<SVGPathElement>;
 
-  constructor(private activatedRoute: ActivatedRoute,
-              private router: Router) {
-  }
+  public animState = 'normal';
+
+  @ViewChild('selectedCampusTitle')
+  public selectedCampusTitleElement: ElementRef<HTMLSpanElement>;
+
+  private textRotate: Typewriter | null = null;
 
   public clearSelectedCampus() {
     if (this.selectedCampus !== null) {
@@ -50,6 +84,17 @@ export class MainComponent implements OnInit {
         const previousSelectedCampus = this.selectedCampus;
 
         this.selectedCampus = this.campuses.splice(this.campuses.findIndex(campus => campus.name === decodedCampusTitle), 1)[0];
+
+        if (this.textRotate !== null) {
+          this.textRotate.changeText(this.selectedCampus.name);
+        }
+
+        this.animState = 'gone';
+
+        setTimeout(() => {
+          this.animState = 'coming';
+          this.animState = 'normal';
+        }, 3000);
 
         if (previousSelectedCampus !== null) {
           this.campuses.push(previousSelectedCampus);
@@ -118,10 +163,24 @@ export class MainComponent implements OnInit {
     const rootB = new MenuItem({title: 'rootOptionB'});
 
     this.campuses = [rootA, rootB];
+    for (let i = 0; i < 20; i++) {
+      this.campuses.push(new MenuItem({title: `${i}`}));
+    }
     this.sortCampuses();
 
     this.handleRoute(this.activatedRoute.snapshot.paramMap);
     this.activatedRoute.paramMap.subscribe(map => this.handleRoute(map));
+  }
+
+  ngAfterViewInit(): void {
+    this.textRotate = new Typewriter({
+      target: this.selectedCampusTitleElement.nativeElement,
+      initialText: this.selectedCampus !== null ? this.selectedCampus.name : '',
+      period: 1500,
+      terminalText: '_'
+    }, {
+      animateAppearance: true,
+    });
   }
 }
 
