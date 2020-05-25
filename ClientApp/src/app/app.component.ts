@@ -4,7 +4,7 @@ import {Store} from '@ngrx/store';
 import {addCampus} from './store/campus.actions';
 import {Campus} from './models/campus.model';
 import {addFloor} from './store/floor.actions';
-import {addClassRoom} from './store/class-room.actions';
+import {addRoom} from './store/room.actions';
 
 @Component({
   selector: 'app-root',
@@ -63,8 +63,8 @@ export class AppComponent implements OnInit {
       })
     );
 
-    this.store.dispatch(addClassRoom({
-        classRoom: {
+    this.store.dispatch(addRoom({
+        room: {
           id: 1,
           title: 'Класс рум1!!!',
           floorId: 1,
@@ -72,8 +72,8 @@ export class AppComponent implements OnInit {
       })
     );
 
-    this.store.dispatch(addClassRoom({
-        classRoom: {
+    this.store.dispatch(addRoom({
+        room: {
           id: 2,
           title: 'Класс рум2!!!',
           floorId: 1,
@@ -81,8 +81,8 @@ export class AppComponent implements OnInit {
       })
     );
 
-    this.store.dispatch(addClassRoom({
-        classRoom: {
+    this.store.dispatch(addRoom({
+        room: {
           id: 3,
           title: 'Класс рум3!!!',
           floorId: 2,

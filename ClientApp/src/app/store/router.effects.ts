@@ -8,18 +8,18 @@ import {Campus} from '../models/campus.model';
 import {Floor} from '../models/floor.model';
 import {selectCampus} from './campus.actions';
 import {selectFloor} from './floor.actions';
-import {ClassRoom} from '../models/class-room.model';
-import {selectClassRoom} from './class-room.actions';
+import {Room} from '../models/room.model';
+import {selectRoom} from './room.actions';
 
 @Injectable()
 export class RouterEffects {
   private selectedCampus: Campus | null = null;
   private selectedFloor: Floor | null = null;
-  private selectedClassRoom: ClassRoom | null = null;
+  private selectedRoom: Room | null = null;
   private previousURI: string | null = null;
   private campuses: Campus[] | null = null;
   private floors: Floor[] | null = null;
-  private classRooms: ClassRoom[] | null = null;
+  private rooms: Room[] | null = null;
 
   constructor(
     private actions: Actions,
@@ -32,8 +32,8 @@ export class RouterEffects {
       .select(state => state.floor.selectedFloor)
       .subscribe(newSelectedFloor => this.selectedFloor = newSelectedFloor);
     this.store
-      .select(state => state.classRoom.selectedClassRoom)
-      .subscribe(newSelectedClassRoom => this.selectedClassRoom = newSelectedClassRoom);
+      .select(state => state.room.selectedRoom)
+      .subscribe(newSelectedRoom => this.selectedRoom = newSelectedRoom);
 
     this.store
       .select(state => state.campus.campuses)
@@ -42,8 +42,8 @@ export class RouterEffects {
       .select(state => state.floor.floors)
       .subscribe(newFloors => this.floors = newFloors);
     this.store
-      .select(state => state.classRoom.classRooms)
-      .subscribe(newClassRooms => this.classRooms = newClassRooms);
+      .select(state => state.room.rooms)
+      .subscribe(newRooms => this.rooms = newRooms);
     // TODO Same for pc
   }
 
@@ -70,13 +70,13 @@ export class RouterEffects {
                 if (floorFromURI && floorFromURI !== this.selectedFloor) {
                   this.store.dispatch(selectFloor({floor: floorFromURI}));
 
-                  const encodedClassRoomTitle = action.payload.routerState.root.firstChild.params.classRoom;
-                  if (encodedClassRoomTitle) {
-                    const decodedClassRoomTitle = decodeURI(encodedClassRoomTitle);
-                    const classRoomFromURI: ClassRoom | null = this.classRooms.find(classRoom => classRoom.title === decodedClassRoomTitle);
+                  const encodedRoomTitle = action.payload.routerState.root.firstChild.params.room;
+                  if (encodedRoomTitle) {
+                    const decodedRoomTitle = decodeURI(encodedRoomTitle);
+                    const roomFromURI: Room | null = this.rooms.find(room => room.title === decodedRoomTitle);
 
-                    if (classRoomFromURI && classRoomFromURI !== this.selectedClassRoom) {
-                      this.store.dispatch(selectClassRoom({classRoom: classRoomFromURI}));
+                    if (roomFromURI && roomFromURI !== this.selectedRoom) {
+                      this.store.dispatch(selectRoom({room: roomFromURI}));
                     }
                   }
                 }

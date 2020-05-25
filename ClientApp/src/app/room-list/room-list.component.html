@@ -1,0 +1,13 @@
+<div class="flex flex-column">
+  <a class="header-text cursor-pointer" (click)="onDeselectRoom()">Приміщення</a>
+  <div>
+    Обране приміщення: <span #selectedRoomTitle></span>
+  </div>
+  <ng-scrollbar>
+    <ul class="navigation-list">
+      <li *ngFor="let classroom of rooms|async" class="navigation-item">
+        <a (click)="onSelectRoom($event, classroom)">{{classroom.title}}</a>
+      </li>
+    </ul>
+  </ng-scrollbar>
+</div>
