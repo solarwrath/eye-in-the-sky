@@ -68,7 +68,7 @@ export const getFloorsOfCampus = (state: AppState, campus: Campus): Floor[] => {
 
 export const getFloorsOfSelectedCampus = (state: AppState): Floor[] | null => {
   if (state.campus.selectedCampus != null) {
-    return state.floor.floors.filter(floor => floor.campusId === state.campus.selectedCampus.id);
+    return getFloorsOfCampus(state, state.campus.selectedCampus);
   }
 
   return null;

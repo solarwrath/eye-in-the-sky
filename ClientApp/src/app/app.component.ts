@@ -2,9 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {AppState} from './store/reducers';
 import {Store} from '@ngrx/store';
 import {addCampus} from './store/campus.actions';
-import {MenuItem} from './main/main.component';
 import {Campus} from './models/campus.model';
 import {addFloor} from './store/floor.actions';
+import {addClassRoom} from './store/class-room.actions';
 
 @Component({
   selector: 'app-root',
@@ -59,6 +59,33 @@ export class AppComponent implements OnInit {
           id: 3,
           title: 'Вжжвжвжжвж!!!',
           campusId: 2,
+        }
+      })
+    );
+
+    this.store.dispatch(addClassRoom({
+        classRoom: {
+          id: 1,
+          title: 'Класс рум1!!!',
+          floorId: 1,
+        }
+      })
+    );
+
+    this.store.dispatch(addClassRoom({
+        classRoom: {
+          id: 2,
+          title: 'Класс рум2!!!',
+          floorId: 1,
+        }
+      })
+    );
+
+    this.store.dispatch(addClassRoom({
+        classRoom: {
+          id: 3,
+          title: 'Класс рум3!!!',
+          floorId: 2,
         }
       })
     );

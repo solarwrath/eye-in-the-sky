@@ -6,8 +6,7 @@
   <ng-scrollbar>
     <ul class="navigation-list">
       <li *ngFor="let campus of campuses|async" class="navigation-item">
-        <a (click)="onSelectCampus($event, campus)"
-           routerLinkActive="active active-campus">{{campus.title}}</a>
+        <a (click)="onSelectCampus($event, campus)">{{campus.title}}</a>
       </li>
     </ul>
   </ng-scrollbar>

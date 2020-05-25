@@ -18,6 +18,8 @@ import {RouterEffects} from './store/router.effects';
 import {CampusEffects} from './store/campus.effects';
 import {FloorEffects} from './store/floor.effects';
 import { FloorListComponent } from './floor-list/floor-list.component';
+import { ClassRoomListComponent } from './class-room-list/class-room-list.component';
+import {ClassRoomEffects} from './store/class-room.effects';
 
 
 @NgModule({
@@ -26,7 +28,8 @@ import { FloorListComponent } from './floor-list/floor-list.component';
     MainComponent,
     FormEncodedUriPipe,
     CampusListComponent,
-    FloorListComponent
+    FloorListComponent,
+    ClassRoomListComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +38,7 @@ import { FloorListComponent } from './floor-list/floor-list.component';
     BrowserAnimationsModule,
     StoreModule.forRoot(reducers, {}),
     StoreDevtoolsModule.instrument({maxAge: 25, logOnly: environment.production}),
-    EffectsModule.forRoot([RouterEffects, CampusEffects, FloorEffects]),
+    EffectsModule.forRoot([RouterEffects, CampusEffects, FloorEffects, ClassRoomEffects]),
     StoreRouterConnectingModule.forRoot(),
   ],
   providers: [],
