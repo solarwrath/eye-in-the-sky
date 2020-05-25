@@ -28,9 +28,7 @@ export class CampusListComponent implements OnInit, AfterViewInit {
   private typewriter: Typewriter | null = null;
 
   constructor(
-    private store: Store<AppState>,
-    private activatedRoute: ActivatedRoute,
-    private router: Router
+    private store: Store<AppState>
   ) {
   }
 

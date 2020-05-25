@@ -6,8 +6,8 @@ import {Store} from '@ngrx/store';
 import {AppState} from './reducers';
 import {Campus} from '../models/campus.model';
 import {Floor} from '../models/floor.model';
-import {deselectCampus, selectCampus, selectCampusByTitle} from './campus.actions';
-import {deselectFloor, selectFloorByTitle} from './floor.actions';
+import {selectCampus} from './campus.actions';
+import {selectFloor} from './floor.actions';
 
 @Injectable()
 export class RouterEffects {
@@ -15,6 +15,7 @@ export class RouterEffects {
   private selectedFloor: Floor | null = null;
   private previousURI: string | null = null;
   private campuses: Campus[] | null = null;
+  private floors: Floor[] | null = null;
 
   constructor(
     private actions: Actions,
@@ -28,7 +29,10 @@ export class RouterEffects {
       .subscribe(newSelectedFloor => this.selectedFloor = newSelectedFloor);
     this.store
       .select(state => state.campus.campuses)
-      .subscribe(campuses => this.campuses = campuses);
+      .subscribe(newCampuses => this.campuses = newCampuses);
+    this.store
+      .select(state => state.floor.floors)
+      .subscribe(newFloors => this.floors = newFloors);
     // TODO Same for room / pc
   }
 
@@ -39,35 +43,22 @@ export class RouterEffects {
       if (action.payload.routerState.url !== this.previousURI) {
         this.previousURI = action.payload.routerState.url;
 
-        const decodedTitle = decodeURI(action.payload.routerState.url).substr(1);
-
-        if (decodedTitle.length > 0) {
-          const campusFromURI = this.campuses.find(campus => campus.title === decodedTitle);
+        const encodedCampusTitle = action.payload.routerState.root.firstChild.params.campus;
+        if (encodedCampusTitle) {
+          const decodedCampusTitle = decodeURI(encodedCampusTitle);
+          const campusFromURI: Campus | null = this.campuses.find(campus => campus.title === decodedCampusTitle);
 
           if (campusFromURI && campusFromURI !== this.selectedCampus) {
             this.store.dispatch(selectCampus({campus: campusFromURI}));
-          }
-        } else {
-          const routeParamMap = action.payload.routerState.root.paramMap;
 
-          if (routeParamMap) {
-            const campusTitleFromSnapshot = routeParamMap.get('campus');
+            const encodedFloorTitle = action.payload.routerState.root.firstChild.params.floor;
+            if (encodedFloorTitle) {
+              const decodedFloorTitle = decodeURI(encodedFloorTitle);
+              const floorFromURI: Floor | null = this.floors.find(floor => floor.title === decodedFloorTitle);
 
-            if (campusTitleFromSnapshot !== null && campusTitleFromSnapshot !== this.selectedCampus.title) {
-              console.log(1);
-              this.store.dispatch(selectCampusByTitle({campusTitle: campusTitleFromSnapshot}));
-            } else if (campusTitleFromSnapshot === null && this.selectedCampus !== null) {
-              console.log(2);
-              this.store.dispatch(deselectCampus());
-            }
-
-            const floorTitleFromSnapshot = routeParamMap.get('floor');
-            if (floorTitleFromSnapshot !== null && floorTitleFromSnapshot !== this.selectedFloor.title) {
-              console.log(3);
-              this.store.dispatch(selectFloorByTitle({floorTitle: floorTitleFromSnapshot}));
-            } else if (floorTitleFromSnapshot === null && this.selectedFloor !== null) {
-              console.log(4);
-              this.store.dispatch(deselectFloor());
+              if (floorFromURI) {
+                this.store.dispatch(selectFloor({floor: floorFromURI}));
+              }
             }
           }
         }

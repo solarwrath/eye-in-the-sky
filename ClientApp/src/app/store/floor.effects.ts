@@ -11,7 +11,8 @@ import {Floor} from '../models/floor.model';
 @Injectable()
 export class FloorEffects {
   private selectedCampus: Campus | null = null;
-  private selectedFloor: Floor | null = null;
+  private previouslySelectedFloor: Floor | null = null;
+  private currentlySelectedFloor: Floor | null = null;
 
   constructor(
     private actions: Actions,
@@ -23,32 +24,35 @@ export class FloorEffects {
       .subscribe(newSelectedCampus => this.selectedCampus = newSelectedCampus);
     this.store
       .select(state => state.floor.selectedFloor)
-      .subscribe(newSelectedFloor => this.selectedFloor = newSelectedFloor);
+      .subscribe(newSelectedFloor => {
+        this.previouslySelectedFloor = this.currentlySelectedFloor;
+        this.currentlySelectedFloor = newSelectedFloor;
+      });
   }
 
-  @Effect()
+  @Effect({dispatch: false})
   navigateOnFloorSelection = this.actions.pipe(
     ofType(FloorActions.selectFloor),
     tap((action) => {
-      if (this.selectedFloor !== action.floor) {
-        this.router.navigate([`/${encodeURI(this.selectedCampus.title)}/${encodeURI(action.floor.title)}`]);
+      if (this.previouslySelectedFloor !== action.floor) {
+        this.router.navigate([`/${this.selectedCampus.title}/${action.floor.title}`]);
       }
     })
   );
 
-  @Effect()
+  @Effect({dispatch: false})
   navigateOnFloorSelectionByTitle = this.actions.pipe(
     ofType(FloorActions.selectFloorByTitle),
     tap((action) => {
-      if (this.selectedFloor.title !== action.floorTitle) {
-        this.router.navigate([`/${encodeURI(this.selectedCampus.title)}/${encodeURI(action.floorTitle)}`]);
+      if (this.previouslySelectedFloor.title !== action.floorTitle) {
+        this.router.navigate([`/${this.selectedCampus.title}/${action.floorTitle}`]);
       }
     })
   );
 
-  @Effect()
+  @Effect({dispatch: false})
   navigateOnFloorDeselection = this.actions.pipe(
     ofType(FloorActions.deselectFloor),
-    tap(() => this.router.navigate([`/${encodeURI(this.selectedCampus.title)}`]))
+    tap(() => this.router.navigate([`/${this.selectedCampus.title}`]))
   );
 }

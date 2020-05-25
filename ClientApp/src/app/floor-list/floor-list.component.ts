@@ -1,15 +1,59 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import Typewriter from '../typewriter/typewriter';
+import {Store} from '@ngrx/store';
+import {AppState} from '../store/reducers';
+import {Floor} from '../models/floor.model';
+import {Observable} from 'rxjs';
+import {getFloorsOfSelectedCampus} from '../store/floor.reducer';
+import {deselectFloor, selectFloor} from '../store/floor.actions';
 
 @Component({
   selector: 'app-floor-list',
   templateUrl: './floor-list.component.html',
   styleUrls: ['./floor-list.component.scss']
 })
-export class FloorListComponent implements OnInit {
+export class FloorListComponent implements OnInit, AfterViewInit {
+  public floors: Observable<Floor[] | null> = this.store.select(getFloorsOfSelectedCampus);
+  public selectedFloor: Floor | null = null;
 
-  constructor() { }
+  @ViewChild('selectedFloorTitle')
+  public selectedFloorTitleElement: ElementRef<HTMLSpanElement>;
+  private typewriter: Typewriter | null = null;
 
-  ngOnInit(): void {
+  constructor(
+    private store: Store<AppState>
+  ) {
   }
 
+  ngOnInit(): void {
+    this.store
+      .select(state => state.floor.selectedFloor)
+      .subscribe(newSelectedFloor => this.selectedFloor = newSelectedFloor);
+  }
+
+  ngAfterViewInit(): void {
+    this.typewriter = new Typewriter({
+      target: this.selectedFloorTitleElement.nativeElement,
+      initialText: this.selectedFloor !== null ? this.selectedFloor.title : '',
+      period: 1500,
+      terminalText: '_'
+    }, {
+      animateAppearance: true,
+    });
+
+    this.store
+      .select(state => state.floor.selectedFloor)
+      .subscribe(newSelectedFloor => {
+        this.typewriter.changeText(newSelectedFloor == null ? '' : newSelectedFloor.title);
+      });
+  }
+
+  public onSelectFloor(event: any, floor: Floor): void {
+    this.store.dispatch(selectFloor({floor}));
+    console.log('dispatched');
+  }
+
+  public deselectFloor(): void {
+    this.store.dispatch(deselectFloor());
+  }
 }

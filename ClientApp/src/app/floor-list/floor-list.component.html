@@ -1,1 +1,16 @@
-<p>floor-list works!</p>
+<div class="flex flex-column">
+  <a class="header-text cursor-pointer" (click)="deselectFloor()">Поверх</a>
+  <div>
+    Обраний поверх: <span #selectedFloorTitle></span>
+  </div>
+  <ng-scrollbar>
+    <ul class="navigation-list">
+      <li *ngFor="let floor of floors|async" class="navigation-item">
+        <a (click)="onSelectFloor($event, floor)"
+           routerLinkActive="active active-floor">
+          {{floor.title}}
+        </a>
+      </li>
+    </ul>
+  </ng-scrollbar>
+</div>

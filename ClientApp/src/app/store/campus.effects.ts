@@ -41,7 +41,7 @@ export class CampusEffects {
     ofType(CampusActions.selectCampusByTitle),
     tap((action) => {
       if (this.previouslySelectedCampus === null || this.previouslySelectedCampus.title !== action.campusTitle) {
-        this.router.navigate([`${encodeURI(action.campusTitle)}`]);
+        this.router.navigate([action.campusTitle]);
       }
     })
   );
@@ -50,7 +50,6 @@ export class CampusEffects {
   navigateOnCampusDeselection = this.actions.pipe(
     ofType(CampusActions.deselectCampus),
     tap(() => {
-      console.log('e');
       this.router.navigate(['/']);
     })
   );
