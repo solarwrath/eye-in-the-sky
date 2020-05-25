@@ -15,15 +15,16 @@ import {addCampus, selectCampus} from '../store/campus.actions';
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss'],
 })
-export class MainComponent implements OnInit, AfterViewInit {
+export class MainComponent/* implements OnInit, AfterViewInit*/ {
 
-  public campusSelectedId: Observable<number | null> = this.campusStore.select(state => state.selectedCampusId).pipe(tap(a => console.log(a)));
+  // public campusSelectedId: Observable<number | null> = this.campusStore.select(state => state.selectedCampusId).pipe(tap(a => console.log(a)));
 
   constructor(private activatedRoute: ActivatedRoute,
               private router: Router,
               private campusStore: Store<CampusState>) {
   }
 
+/*
   public campuses: MenuItem[];
   public selectedCampus: MenuItem | null = null;
   public selectedFloor: MenuItem | null = null;
@@ -108,33 +109,6 @@ export class MainComponent implements OnInit, AfterViewInit {
 
   public onCampusSelect(event: any, campus: MenuItem) {
     this.router.navigate([`/${encodeURI(campus.name)}`]);
-
-    const boundingRectangle = event.target.getBoundingClientRect();
-    const activePathForm = new Builder()
-      .moveTo(boundingRectangle.x, boundingRectangle.y)
-      .horizontalTo(boundingRectangle.x + 50)
-      .verticalTo(boundingRectangle.y + 100)
-      .end();
-
-    // Hack to disable no animation when d is not set
-    if (this.firstTimeActivePathShown) {
-      this.activePath.nativeElement.setAttribute('d', activePathForm);
-    }
-
-    // This sequencing fixes glitch, during which full pathForm is shown for a couple of frames and then gets animated
-    anime({
-      targets: '#activePath',
-      strokeDashoffset: [anime.setDashoffset, 0],
-      easing: 'easeInOutSine',
-      duration: 1500,
-      direction: 'alternate',
-      loop: true
-    });
-
-    setTimeout(() => {
-      this.activePath.nativeElement.setAttribute('d', activePathForm);
-      this.firstTimeActivePathShown = false;
-    }, 0);
   }
 
   ngOnInit(): void {
@@ -176,11 +150,11 @@ export class MainComponent implements OnInit, AfterViewInit {
     }, {
       animateAppearance: true,
     });
-  }
+  }*/
 }
 
 export class MenuItem {
-  public name: string;
+  /*public name: string;
   public children: MenuItem[] | null;
 
   public constructor(options: { title: string, children?: MenuItem[] | null }) {
@@ -190,5 +164,5 @@ export class MenuItem {
     } else {
       this.children = options.children;
     }
-  }
+  }*/
 }

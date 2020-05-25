@@ -1,0 +1,14 @@
+<div class="flex flex-column">
+  <a routerLink='/' class="header-text">Корпус</a>
+  <div>
+    Обраний корпус: <span #selectedCampusTitle></span>
+  </div>
+  <ng-scrollbar>
+    <ul class="navigation-list">
+      <li *ngFor="let campus of campuses|async" class="navigation-item">
+        <a (click)="onSelectCampus($event, campus)"
+           routerLinkActive="active active-campus">{{campus.title}}</a>
+      </li>
+    </ul>
+  </ng-scrollbar>
+</div>

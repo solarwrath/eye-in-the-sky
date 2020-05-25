@@ -1,4 +1,4 @@
-<div class="steps-container">
+<!--<div class="steps-container">
   <nav class="steps-nav">
     <div style="display: flex;flex-direction: column">
       <a routerLink='/' class="header-text">Корпус</a>
@@ -6,12 +6,6 @@
         {{campusSelectedId|async}}
         Обраний корпус: <span #selectedCampusTitle></span>
       </div>
-      <!--
-       <div *ngIf="selectedCampus !== null">
-         <div style="display: inline-block" [@myAnim]="animState">{{selectedCampus.name}}</div>
-         <button (click)="clearSelectedCampus()">Clear</button>
-       </div>
-       -->
       <ng-scrollbar>
         <ul class="navigation-list">
           <li *ngFor="let campus of campuses" class="navigation-item">
@@ -53,7 +47,6 @@
     </ng-container>
   </nav>
 
-  <!-- is separated here for semantic purposes -->
   <main *ngIf="selectedPC !== null">
     Data for PC: {{ selectedPC.name}}
   </main>
@@ -62,3 +55,4 @@
 <svg class="background">
   <path #activePath id="activePath" stroke="green" d="" fill="none" [hidden]="firstTimeActivePathShown"></path>
 </svg>
+-->

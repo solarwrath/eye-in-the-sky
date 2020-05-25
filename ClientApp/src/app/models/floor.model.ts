@@ -1,5 +1,5 @@
 export interface Floor {
-  id: number,
-  title: string,
-  campusId: number,
+  id: number;
+  title: string;
+  campusId: number;
 }

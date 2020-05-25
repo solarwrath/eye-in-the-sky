@@ -15,6 +15,7 @@ const initialState: FloorState = {
   floors: [],
 };
 
+// tslint:disable-next-line:variable-name
 export const _floorReducer = createReducer(
   initialState,
   on(FloorActions.addFloor, (state, {floor}) => {
@@ -29,12 +30,24 @@ export const _floorReducer = createReducer(
       selectedFloor: floor,
     };
   }),
+  on(FloorActions.selectFloorByTitle, (state, {floorTitle}) => {
+    return {
+      ...state,
+      selectedFloor: state.floors.find(floor => floor.title === floorTitle)
+    };
+  }),
+  on(FloorActions.deselectFloor, (state) => {
+    return {
+      ...state,
+      selectedFloor: null,
+    };
+  }),
   on(CampusActions.selectCampus, (state, {campus}) => {
     return {
       ...state,
       selectedFloor: null,
     };
-  })
+  }),
 );
 
 export const getFloorsOfCampus = (state: AppState, campus: Campus): Floor[] => {

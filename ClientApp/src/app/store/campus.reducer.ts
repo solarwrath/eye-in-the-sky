@@ -12,6 +12,7 @@ const initialState: CampusState = {
   campuses: [],
 };
 
+// tslint:disable-next-line:variable-name
 export const _campusReducer = createReducer(
   initialState,
   on(CampusActions.addCampus, (state, {campus}) => {
@@ -24,6 +25,18 @@ export const _campusReducer = createReducer(
     return {
       ...state,
       selectedCampus: campus,
+    };
+  }),
+  on(CampusActions.selectCampusByTitle, (state, {campusTitle}) => {
+    return {
+      ...state,
+      selectedCampus: state.campuses.find(campus => campus.title === campusTitle),
+    };
+  }),
+  on(CampusActions.deselectCampus, (state) => {
+    return {
+      ...state,
+      selectedCampus: null,
     };
   })
 );

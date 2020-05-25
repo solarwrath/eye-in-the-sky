@@ -11,12 +11,22 @@ import {StoreModule} from '@ngrx/store';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {environment} from '../environments/environment';
 import {reducers} from './store/reducers';
+import {CampusListComponent} from './campus-list/campus-list.component';
+import {EffectsModule} from '@ngrx/effects';
+import {StoreRouterConnectingModule} from '@ngrx/router-store';
+import {RouterEffects} from './store/router.effects';
+import {CampusEffects} from './store/campus.effects';
+import {FloorEffects} from './store/floor.effects';
+import { FloorListComponent } from './floor-list/floor-list.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     MainComponent,
-    FormEncodedUriPipe
+    FormEncodedUriPipe,
+    CampusListComponent,
+    FloorListComponent
   ],
   imports: [
     BrowserModule,
@@ -25,6 +35,8 @@ import {reducers} from './store/reducers';
     BrowserAnimationsModule,
     StoreModule.forRoot(reducers, {}),
     StoreDevtoolsModule.instrument({maxAge: 25, logOnly: environment.production}),
+    EffectsModule.forRoot([RouterEffects, CampusEffects, FloorEffects]),
+    StoreRouterConnectingModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]
