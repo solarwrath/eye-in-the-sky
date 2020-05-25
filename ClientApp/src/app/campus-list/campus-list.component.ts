@@ -3,10 +3,8 @@ import {AppState} from '../store/reducers';
 import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs';
 import {Campus} from '../models/campus.model';
-import {selectCampus} from '../store/campus.actions';
+import {deselectCampus, selectCampus} from '../store/campus.actions';
 import Builder from '@rob10e/svg-path-js';
-import anime from 'animejs/lib/anime.es';
-import {ActivatedRoute, Router} from '@angular/router';
 import Typewriter from '../typewriter/typewriter';
 
 @Component({
@@ -86,5 +84,9 @@ export class CampusListComponent implements OnInit, AfterViewInit {
     }, 0);
 
     */
+  }
+
+  public onDeselectCampus(): void {
+    this.store.dispatch(deselectCampus());
   }
 }

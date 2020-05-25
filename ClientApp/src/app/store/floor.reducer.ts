@@ -48,6 +48,18 @@ export const _floorReducer = createReducer(
       selectedFloor: null,
     };
   }),
+  on(CampusActions.deselectCampus, (state) => {
+    return {
+      ...state,
+      selectedFloor: null,
+    };
+  }),
+  on(CampusActions.selectCampusByTitle, (state) => {
+    return {
+      ...state,
+      selectedFloor: null,
+    };
+  }),
 );
 
 export const getFloorsOfCampus = (state: AppState, campus: Campus): Floor[] => {

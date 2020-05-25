@@ -28,7 +28,9 @@ export class FloorListComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.store
       .select(state => state.floor.selectedFloor)
-      .subscribe(newSelectedFloor => this.selectedFloor = newSelectedFloor);
+      .subscribe(newSelectedFloor => {
+        this.selectedFloor = newSelectedFloor;
+      });
   }
 
   ngAfterViewInit(): void {
@@ -50,10 +52,9 @@ export class FloorListComponent implements OnInit, AfterViewInit {
 
   public onSelectFloor(event: any, floor: Floor): void {
     this.store.dispatch(selectFloor({floor}));
-    console.log('dispatched');
   }
 
-  public deselectFloor(): void {
+  public onDeselectFloor(): void {
     this.store.dispatch(deselectFloor());
   }
 }
