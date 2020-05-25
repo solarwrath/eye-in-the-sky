@@ -60,6 +60,10 @@ export class RoomEffects {
   @Effect({dispatch: false})
   navigateOnRoomDeselection = this.actions.pipe(
     ofType(RoomActions.deselectRoom),
-    tap(() => this.router.navigate([`/${this.selectedCampus.title}/${this.selectedFloor.title}`]))
+    tap(() => {
+      if (this.selectedCampus != null && this.selectedFloor != null) {
+        this.router.navigate([`/${this.selectedCampus.title}/${this.selectedFloor.title}`]);
+      }
+    })
   );
 }

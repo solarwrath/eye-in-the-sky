@@ -53,6 +53,10 @@ export class FloorEffects {
   @Effect({dispatch: false})
   navigateOnFloorDeselection = this.actions.pipe(
     ofType(FloorActions.deselectFloor),
-    tap(() => this.router.navigate([`/${this.selectedCampus.title}`]))
+    tap(() => {
+      if (this.selectedCampus != null) {
+        this.router.navigate([`/${this.selectedCampus.title}`]);
+      }
+    })
   );
 }
