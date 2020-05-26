@@ -17,10 +17,11 @@ import {StoreRouterConnectingModule} from '@ngrx/router-store';
 import {RouterEffects} from './store/router.effects';
 import {CampusEffects} from './store/campus.effects';
 import {FloorEffects} from './store/floor.effects';
-import { FloorListComponent } from './floor-list/floor-list.component';
-import { RoomListComponent } from './room-list/room-list.component';
+import {FloorListComponent} from './floor-list/floor-list.component';
+import {RoomListComponent} from './room-list/room-list.component';
 import {RoomEffects} from './store/room.effects';
-
+import {FaIconLibrary, FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {faTimes} from '@fortawesome/free-solid-svg-icons';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,7 @@ import {RoomEffects} from './store/room.effects';
     FormEncodedUriPipe,
     CampusListComponent,
     FloorListComponent,
-    RoomListComponent
+    RoomListComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,9 +41,14 @@ import {RoomEffects} from './store/room.effects';
     StoreDevtoolsModule.instrument({maxAge: 25, logOnly: environment.production}),
     EffectsModule.forRoot([RouterEffects, CampusEffects, FloorEffects, RoomEffects]),
     StoreRouterConnectingModule.forRoot(),
+    FontAwesomeModule,
+    NgScrollbarModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {
+  constructor(private library: FaIconLibrary){
+    library.addIcons(faTimes);
+  }
 }

@@ -1,8 +1,22 @@
 <div class="flex flex-column">
   <a (click)="onDeselectCampus()" class="header-text cursor-pointer">Корпус</a>
-  <div>
-    Обраний корпус: <span #selectedCampusTitle></span>
+
+  <div class="list-selected-item">
+    <h2>
+      Обраний корпус:
+      <br>
+    </h2>
+    <div>
+      <span #selectedCampusTitle></span>
+      <fa-icon (click)="onDeselectCampus()"
+               *ngIf="selectedCampus !== null"
+               icon="times"
+               class="cursor-pointer"
+      >
+      </fa-icon>
+    </div>
   </div>
+
   <ng-scrollbar>
     <ul class="navigation-list">
       <li *ngFor="let campus of campuses|async" class="navigation-item">

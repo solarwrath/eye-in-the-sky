@@ -1,8 +1,20 @@
 <div class="flex flex-column">
   <a class="header-text cursor-pointer" (click)="onDeselectRoom()">Приміщення</a>
-  <div>
-    Обране приміщення: <span #selectedRoomTitle></span>
+
+  <div class="list-selected-item">
+    <h2>
+      Обране приміщення:
+      <br>
+    </h2>
+    <div>
+      <span #selectedRoomTitle></span>
+      <fa-icon (click)="onDeselectRoom()"
+               *ngIf="selectedRoom !== null"
+               icon="times"
+               class="cursor-pointer"></fa-icon>
+    </div>
   </div>
+
   <ng-scrollbar>
     <ul class="navigation-list">
       <li *ngFor="let classroom of rooms|async" class="navigation-item">
