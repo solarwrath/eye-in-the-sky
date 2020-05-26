@@ -5,10 +5,9 @@ export default class Typewriter {
   private period: number;
 
   private isDeleting = false;
-  private changingStarted = false;
-  private shallQuit = false;
 
-  private timeoutSubscriptions: number[] = [];
+  private utilitySubscriptions: number[] = [];
+  private workerSubscriptions: number[] = [];
   private lampartCounter = 0;
 
   constructor(
@@ -41,67 +40,35 @@ export default class Typewriter {
     }
   }
 
-  private queue = [];
+  private invocationRegistry: number[] = [];
 
   public async changeText(newText: string, delay: number = 0) {
-    if (this.target.innerText === newText) {
-      return;
-    }
-
-
     // Concurrency check
     // Honestly, this is a mess
     const currentLamportCounter = this.lampartCounter++;
-    this.queue.push(currentLamportCounter);
 
-    this.changingStarted = true;
+    this.target.dataset.lamport = `${currentLamportCounter}`;
+    this.invocationRegistry.push(currentLamportCounter);
 
-    if (this.queue.length !== 1) {
-      this.shallQuit = true;
-
-      const indexInQueue = this.queue.findIndex(iteratedLamportCounter => iteratedLamportCounter === currentLamportCounter);
-      // If new one has started between start function and this
-      if (indexInQueue !== null) {
-        let lamportQuit = false;
-        while (!lamportQuit && (this.shallQuit || !this.changingStarted)) {
-          // Pause in js
-          await new Promise(r => setTimeout(r, 100));
-
-          // Lamport quit (if queue has no current counter from the closure, it means that new invocation has been)
-          if (this.queue.length > 0 && this.queue[0] > currentLamportCounter) {
-            lamportQuit = true;
-          }
-        }
-
-        if (lamportQuit) {
-          return;
-        }
-      }
-    }
-    this.shallQuit = false;
-
-    this.clearSubscriptions();
     // Prevent multiple changeTexts running on a single element
-    this.isDeleting = !newText.startsWith(this.currentText);
 
     const delayTimeoutSubscription = setTimeout(() => {
       this.innerChangeText(newText, currentLamportCounter);
 
-      this.timeoutSubscriptions = this.timeoutSubscriptions.splice(
-        this.timeoutSubscriptions.findIndex(timeoutSubscription => timeoutSubscription === delayTimeoutSubscription),
+      this.utilitySubscriptions = this.utilitySubscriptions.splice(
+        this.utilitySubscriptions.findIndex(timeoutSubscription => timeoutSubscription === delayTimeoutSubscription),
         1
       );
     }, delay);
 
-    this.timeoutSubscriptions.push(delayTimeoutSubscription);
+    this.utilitySubscriptions.push(delayTimeoutSubscription);
   }
 
   private innerChangeText(desiredText: string, lamportCounter: number): void {
+    this.isDeleting = !desiredText.startsWith(this.currentText);
     // Concurrency quit
-    if (this.shallQuit) {
-      this.shallQuit = false;
-
-      this.queue = this.queue.filter(lamport => lamport !== lamportCounter);
+    if (Number.parseInt(this.target.dataset.lamport, 10) > lamportCounter) {
+      this.invocationRegistry = this.invocationRegistry.filter(registry => registry !== lamportCounter);
 
       return;
     }
@@ -111,7 +78,13 @@ export default class Typewriter {
     } else {
       this.currentText = desiredText.substring(0, this.currentText.length + 1);
     }
-    this.target.innerText = this.constructInnerText();
+    if (Number.parseInt(this.target.dataset.lamport, 10) > lamportCounter) {
+      this.invocationRegistry = this.invocationRegistry.filter(registry => registry !== lamportCounter);
+
+      return;
+    } else {
+      this.target.innerText = this.constructInnerText();
+    }
 
     let delta = 300 - Math.random() * 100;
 
@@ -128,25 +101,28 @@ export default class Typewriter {
       const permutateTextSubscription = setTimeout(() => {
         this.innerChangeText(desiredText, lamportCounter);
 
-        this.timeoutSubscriptions = this.timeoutSubscriptions.splice(
-          this.timeoutSubscriptions.findIndex(timeoutSubscription => timeoutSubscription === permutateTextSubscription),
+        this.workerSubscriptions = this.workerSubscriptions.splice(
+          this.workerSubscriptions.findIndex(timeoutSubscription => timeoutSubscription === permutateTextSubscription),
           1
         );
       }, delta);
-      this.timeoutSubscriptions.push(permutateTextSubscription);
+      this.utilitySubscriptions.push(permutateTextSubscription);
     } else {
-      // Cleanup
-
-      this.changingStarted = false;
-      this.shallQuit = false;
-
-      this.queue = this.queue.filter(lamport => lamport !== lamportCounter);
-      console.log(lamportCounter, this);
+      this.invocationRegistry = this.invocationRegistry.filter(registry => registry !== lamportCounter);
     }
   }
 
-  public clearSubscriptions(): void {
-    this.timeoutSubscriptions.forEach(subscription => clearTimeout(subscription));
+  public dismantle(): void {
+    this.clearWorkerSubscription();
+    this.clearUtilitySubscriptions();
+  }
+
+  public clearUtilitySubscriptions(): void {
+    this.utilitySubscriptions.forEach(subscription => clearTimeout(subscription));
+  }
+
+  public clearWorkerSubscription(): void {
+    this.workerSubscriptions.forEach(subscription => clearTimeout(subscription));
   }
 
   private constructInnerText(): string {
