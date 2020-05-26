@@ -13,7 +13,15 @@ import {deselectFloor, selectFloor} from '../store/floor.actions';
   styleUrls: ['./floor-list.component.scss']
 })
 export class FloorListComponent implements OnInit, AfterViewInit {
-  public floors: Observable<Floor[] | null> = this.store.select(getFloorsOfSelectedCampus);
+  public availableForSelectionFloors: Observable<Floor[] | null> =
+    this.store.select(state => {
+      const floorsOfSelectedCampus = getFloorsOfSelectedCampus(state);
+      if (floorsOfSelectedCampus !== null) {
+        return floorsOfSelectedCampus.filter(floor => floor !== this.selectedFloor);
+      }
+
+      return null;
+    });
   public selectedFloor: Floor | null = null;
 
   @ViewChild('selectedFloorTitle')

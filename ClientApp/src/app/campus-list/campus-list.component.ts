@@ -6,6 +6,7 @@ import {Campus} from '../models/campus.model';
 import {deselectCampus, selectCampus} from '../store/campus.actions';
 import Builder from '@rob10e/svg-path-js';
 import Typewriter from '../typewriter/typewriter';
+import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-campus-list',
@@ -13,7 +14,11 @@ import Typewriter from '../typewriter/typewriter';
   styleUrls: ['./campus-list.component.scss']
 })
 export class CampusListComponent implements OnInit, AfterViewInit {
-  public campuses: Observable<Campus[]> = this.store.select(state => state.campus.campuses);
+  public availableForSelectionCampuses: Observable<Campus[]> =
+    this.store.select(
+      state => state.campus.campuses.filter(campus => campus !== state.campus.selectedCampus)
+    );
+
   public selectedCampus: Campus | null = null;
 
   /*

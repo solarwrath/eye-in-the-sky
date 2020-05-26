@@ -19,7 +19,7 @@
 
   <ng-scrollbar>
     <ul class="navigation-list">
-      <li *ngFor="let campus of campuses|async" class="navigation-item">
+      <li *ngFor="let campus of availableForSelectionCampuses|async" class="navigation-item">
         <a (click)="onSelectCampus($event, campus)">{{campus.title}}</a>
       </li>
     </ul>

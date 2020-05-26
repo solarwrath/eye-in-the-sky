@@ -17,7 +17,7 @@
 
   <ng-scrollbar>
     <ul class="navigation-list">
-      <li *ngFor="let classroom of rooms|async" class="navigation-item">
+      <li *ngFor="let classroom of availableForSelectionRooms|async" class="navigation-item">
         <a (click)="onSelectRoom($event, classroom)">{{classroom.title}}</a>
       </li>
     </ul>

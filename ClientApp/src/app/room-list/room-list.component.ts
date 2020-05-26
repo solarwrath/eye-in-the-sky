@@ -13,7 +13,14 @@ import {deselectRoom, selectRoom} from '../store/room.actions';
   styleUrls: ['./room-list.component.scss']
 })
 export class RoomListComponent implements OnInit, AfterViewInit {
-  public rooms: Observable<Room[] | null> = this.store.select(getRoomsOfSelectedFloor);
+  public availableForSelectionRooms: Observable<Room[] | null> = this.store.select(state => {
+    const roomsOfSelectedFloor = getRoomsOfSelectedFloor(state);
+    if (roomsOfSelectedFloor !== null) {
+      return state.room.rooms.filter(room => room !== this.selectedRoom);
+    }
+
+    return null;
+  });
   public selectedRoom: Room | null = null;
 
   @ViewChild('selectedRoomTitle')
