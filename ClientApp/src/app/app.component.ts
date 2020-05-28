@@ -5,6 +5,8 @@ import {addCampus} from './store/campus.actions';
 import {Campus} from './models/campus.model';
 import {addFloor} from './store/floor.actions';
 import {addRoom} from './store/room.actions';
+import {PC} from './models/pc.model';
+import {addPC} from './store/pc.actions';
 
 @Component({
   selector: 'app-root',
@@ -86,6 +88,26 @@ export class AppComponent implements OnInit {
           id: 3,
           title: 'Класс рум3!!!',
           floorId: 2,
+        }
+      })
+    );
+
+    this.store.dispatch(addPC({
+        pc: {
+          id: 1,
+          roomId: 1,
+          pcName: 'pcName',
+          data: 'pcData'
+        }
+      })
+    );
+
+    this.store.dispatch(addPC({
+        pc: {
+          id: 2,
+          roomId: 1,
+          pcName: 'pcaName',
+          data: 'pcD2ata'
         }
       })
     );

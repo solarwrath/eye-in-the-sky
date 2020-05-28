@@ -22,6 +22,8 @@ import {RoomListComponent} from './room-list/room-list.component';
 import {RoomEffects} from './store/room.effects';
 import {FaIconLibrary, FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {faTimes} from '@fortawesome/free-solid-svg-icons';
+import {PCEffects} from './store/pc.effects';
+import { PcGridComponent } from './pc-grid/pc-grid.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +33,7 @@ import {faTimes} from '@fortawesome/free-solid-svg-icons';
     CampusListComponent,
     FloorListComponent,
     RoomListComponent,
+    PcGridComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,7 +42,7 @@ import {faTimes} from '@fortawesome/free-solid-svg-icons';
     BrowserAnimationsModule,
     StoreModule.forRoot(reducers, {}),
     StoreDevtoolsModule.instrument({maxAge: 25, logOnly: environment.production}),
-    EffectsModule.forRoot([RouterEffects, CampusEffects, FloorEffects, RoomEffects]),
+    EffectsModule.forRoot([RouterEffects, CampusEffects, FloorEffects, RoomEffects, PCEffects]),
     StoreRouterConnectingModule.forRoot(),
     FontAwesomeModule,
     NgScrollbarModule,

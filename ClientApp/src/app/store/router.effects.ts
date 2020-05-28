@@ -10,16 +10,20 @@ import {selectCampus} from './campus.actions';
 import {selectFloor} from './floor.actions';
 import {Room} from '../models/room.model';
 import {selectRoom} from './room.actions';
+import {PC} from '../models/pc.model';
+import {selectPC} from './pc.actions';
 
 @Injectable()
 export class RouterEffects {
   private selectedCampus: Campus | null = null;
   private selectedFloor: Floor | null = null;
   private selectedRoom: Room | null = null;
+  private selectedPC: PC | null = null;
   private previousURI: string | null = null;
   private campuses: Campus[] | null = null;
   private floors: Floor[] | null = null;
   private rooms: Room[] | null = null;
+  private pcs: PC[] | null = null;
 
   constructor(
     private actions: Actions,
@@ -34,6 +38,9 @@ export class RouterEffects {
     this.store
       .select(state => state.room.selectedRoom)
       .subscribe(newSelectedRoom => this.selectedRoom = newSelectedRoom);
+    this.store
+      .select(state => state.pc.selectedPC)
+      .subscribe(newSelectedPC => this.selectedPC = newSelectedPC);
 
     this.store
       .select(state => state.campus.campuses)
@@ -44,7 +51,9 @@ export class RouterEffects {
     this.store
       .select(state => state.room.rooms)
       .subscribe(newRooms => this.rooms = newRooms);
-    // TODO Same for pc
+    this.store
+      .select(state => state.pc.pcs)
+      .subscribe(newPCs => this.pcs = newPCs);
   }
 
   @Effect({dispatch: false})
@@ -77,6 +86,16 @@ export class RouterEffects {
 
                     if (roomFromURI && roomFromURI !== this.selectedRoom) {
                       this.store.dispatch(selectRoom({room: roomFromURI}));
+
+                      const encodedPCName = action.payload.routerState.root.firstChild.params.pc;
+                      if (encodedPCName) {
+                        const decodedPCName = decodeURI(encodedPCName);
+                        const pcFromURI: PC | null = this.pcs.find(pc => pc.pcName === decodedPCName);
+
+                        if (pcFromURI && pcFromURI !== this.selectedPC) {
+                          this.store.dispatch(selectPC({pc: pcFromURI}));
+                        }
+                      }
                     }
                   }
                 }

@@ -1,0 +1,7 @@
+<div>
+  <div *ngFor="let pc of pcs|async">
+    <p *ngIf="pc == selectedPC">selected</p>
+    <p>{{pc.pcName}}</p>
+    <p>{{pc.data}}</p>
+  </div>
+</div>
