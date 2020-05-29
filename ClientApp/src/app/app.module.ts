@@ -26,8 +26,8 @@ import {PCEffects} from './store/pc.effects';
 import {PcGridComponent} from './pc-grid/pc-grid.component';
 import {LoginComponent} from './login/login.component';
 import {AuthEffects} from './store/auth.effects';
-import {FormsModule} from '@angular/forms';
-import { LoaderComponent } from './loader/loader.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {LoaderComponent} from './loader/loader.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +44,7 @@ import { LoaderComponent } from './loader/loader.component';
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     NgScrollbarModule,
     BrowserAnimationsModule,

@@ -2,12 +2,20 @@
 <ng-container *ngIf="!(isPending|async)">
 
   <!-- TODO Make pretty -->
-  <form (ngSubmit)="tryLogin(form)" #form="ngForm">
+  <form (ngSubmit)="tryLogin()" #form>
     <div>
-      <input type="text" placeholder="username" name="username" ngModel required>
+      <input
+        type="text"
+        [formControl]="username"
+        required
+      >
     </div>
     <div>
-      <input type="password" placeholder="password" name="password" ngModel required>
+      <input
+        type="password"
+        [formControl]="password"
+        required
+      >
     </div>
     <button type="submit" [disabled]="form.invalid">Log In</button>
   </form>

@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {AppState} from '../store/reducers';
 import {Store} from '@ngrx/store';
 import {tryLogInUser} from '../store/auth.actions';
-import {NgForm} from '@angular/forms';
+import {FormControl} from '@angular/forms';
 import AuthStatus from '../models/auth-status.enum';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
@@ -39,13 +39,15 @@ export class LoginComponent {
     .select(state => state.auth.authStatus)
     .pipe(map(authStatus => authStatus === AuthStatus.PENDING));
 
+  public username = new FormControl('');
+  public password = new FormControl('');
+
   constructor(
     private store: Store<AppState>,
   ) {
   }
 
-  public tryLogin(form: NgForm): void {
-    // TODO Consider moving to another approach to enable typing
-    this.store.dispatch(tryLogInUser({username: form.value.username, password: form.value.password}));
+  public tryLogin(): void {
+    this.store.dispatch(tryLogInUser({username: this.username.value, password: this.password.value}));
   }
 }
