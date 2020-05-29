@@ -6,11 +6,33 @@ import {NgForm} from '@angular/forms';
 import AuthStatus from '../models/auth-status.enum';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
+import {animate, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
+  animations: [
+    trigger('crossfadeLogin',
+      [
+        transition(':enter', [
+          style({
+            opacity: 0,
+            transform: 'scale(0)'
+          }),
+          animate('500ms', style({
+            opacity: 1,
+            transform: 'scale(1)'
+          })),
+        ]),
+        transition(':leave', [
+          animate('500ms', style({
+            opacity: 0,
+            transform: 'scale(0)'
+          }))
+        ])
+      ])
+  ]
 })
 export class LoginComponent {
   public isPending: Observable<boolean> = this.store

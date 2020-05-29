@@ -1,6 +1,4 @@
-<div *ngIf="(isPending|async)">
-  Loader here!!!
-</div>
+<app-loader *ngIf="(isPending|async)" @crossfadeLogin></app-loader>
 <ng-container *ngIf="!(isPending|async)">
 
   <!-- TODO Make pretty -->

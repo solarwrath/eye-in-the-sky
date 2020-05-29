@@ -24,7 +24,6 @@ export class AuthEffects {
     tap((action) => {
       const subscription = this.signalrClient.checkIdentity(action.username, action.password)
         .subscribe((loginSuccessful: boolean) => {
-            console.log(loginSuccessful);
             if (loginSuccessful) {
               this.store.dispatch(loginSucceeded());
               this.router.navigate(['']);

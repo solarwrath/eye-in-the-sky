@@ -27,6 +27,7 @@ import {PcGridComponent} from './pc-grid/pc-grid.component';
 import {LoginComponent} from './login/login.component';
 import {AuthEffects} from './store/auth.effects';
 import {FormsModule} from '@angular/forms';
+import { LoaderComponent } from './loader/loader.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import {FormsModule} from '@angular/forms';
     RoomListComponent,
     PcGridComponent,
     LoginComponent,
+    LoaderComponent,
   ],
   imports: [
     BrowserModule,
