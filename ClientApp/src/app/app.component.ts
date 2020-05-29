@@ -1,12 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {AppState} from './store/reducers';
+import {AppState} from './core/store/reducers';
 import {Store} from '@ngrx/store';
-import {addCampus} from './store/campus.actions';
-import {Campus} from './models/campus.model';
-import {addFloor} from './store/floor.actions';
-import {addRoom} from './store/room.actions';
-import {PC} from './models/pc.model';
-import {addPC} from './store/pc.actions';
+import {addCampus} from './core/store/campus/campus.actions';
+import {Campus} from './core/models/campus.model';
+import {addFloor} from './core/store/floor/floor.actions';
+import {addRoom} from './core/store/room/room.actions';
+import {addPC} from './core/store/pc/pc.actions';
 
 @Component({
   selector: 'app-root',

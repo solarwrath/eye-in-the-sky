@@ -3,37 +3,35 @@ import {NgModule} from '@angular/core';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {MainComponent} from './main/main.component';
+import {MainComponent} from './components/main-views/main/main.component';
 import {NgScrollbarModule} from 'ngx-scrollbar';
-import {FormEncodedUriPipe} from './form-encoded-uri.pipe';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {StoreModule} from '@ngrx/store';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {environment} from '../environments/environment';
-import {reducers} from './store/reducers';
-import {CampusListComponent} from './campus-list/campus-list.component';
+import {reducers} from './core/store/reducers';
+import {CampusListComponent} from './components/main-views/campus-list/campus-list.component';
 import {EffectsModule} from '@ngrx/effects';
 import {StoreRouterConnectingModule} from '@ngrx/router-store';
-import {RouterEffects} from './store/router.effects';
-import {CampusEffects} from './store/campus.effects';
-import {FloorEffects} from './store/floor.effects';
-import {FloorListComponent} from './floor-list/floor-list.component';
-import {RoomListComponent} from './room-list/room-list.component';
-import {RoomEffects} from './store/room.effects';
+import {RouterEffects} from './core/store/router.effects';
+import {CampusEffects} from './core/store/campus/campus.effects';
+import {FloorEffects} from './core/store/floor/floor.effects';
+import {FloorListComponent} from './components/main-views/floor-list/floor-list.component';
+import {RoomListComponent} from './components/main-views/room-list/room-list.component';
+import {RoomEffects} from './core/store/room/room.effects';
 import {FaIconLibrary, FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {faTimes} from '@fortawesome/free-solid-svg-icons';
-import {PCEffects} from './store/pc.effects';
-import {PcGridComponent} from './pc-grid/pc-grid.component';
-import {LoginComponent} from './login/login.component';
-import {AuthEffects} from './store/auth.effects';
+import {PCEffects} from './core/store/pc/pc.effects';
+import {PcGridComponent} from './components/main-views/pc-grid/pc-grid.component';
+import {LoginComponent} from './components/login/login.component';
+import {AuthEffects} from './core/store/auth/auth.effects';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {LoaderComponent} from './loader/loader.component';
+import {LoaderComponent} from './components/loader/loader.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MainComponent,
-    FormEncodedUriPipe,
     CampusListComponent,
     FloorListComponent,
     RoomListComponent,

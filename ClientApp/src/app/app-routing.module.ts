@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
-import {MainComponent} from './main/main.component';
-import {LoginComponent} from './login/login.component';
+import {MainComponent} from './components/main-views/main/main.component';
+import {LoginComponent} from './components/login/login.component';
 import {AuthGuard} from './auth/auth-guard';
 import {LoginRedirectGuard} from './auth/login-redirect-guard';
 

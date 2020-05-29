@@ -1,9 +1,9 @@
-import {Injectable, OnInit} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
 import {Store} from '@ngrx/store';
-import {AppState} from '../store/reducers';
-import AuthStatus from '../models/auth-status.enum';
-import {setMemorizedLink} from '../store/auth-guard.actions';
+import {AppState} from '../core/store/reducers';
+import AuthStatus from '../core/models/auth-status.enum';
+import {setMemorizedLink} from '../core/store/auth/guard/auth-guard.actions';
 
 @Injectable({
   providedIn: 'root'
