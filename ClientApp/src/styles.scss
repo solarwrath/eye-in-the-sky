@@ -2,6 +2,10 @@
   --accent-color: #FFB913;
 }
 
+.logo {
+  max-width: 150px;
+}
+
 .header-text {
   font-family: 'Roboto', sans-serif;
   font-size: 64px;
@@ -49,4 +53,8 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+body {
+  color: black;
 }

@@ -29,7 +29,8 @@
             ],
             "styles": [
               "src/styles.scss",
-              "node_modules/spinkit/spinkit.min.css"
+              "node_modules/spinkit/spinkit.min.css",
+              "src/bootstrap.min.css"
             ],
             "scripts": []
           },

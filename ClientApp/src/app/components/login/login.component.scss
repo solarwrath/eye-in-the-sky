@@ -1,0 +1,66 @@
+.auth-container {
+  display: flex;
+}
+
+.page-title {
+  font-family: 'Roboto', sans-serif;
+  font-size: 56px;
+  font-weight: 700;
+  margin-bottom: 0.35em;
+}
+
+.auth-container .auth-active-part,
+.auth-container aside {
+  flex-grow: 1;
+  width: 50%;
+  height: 100vh;
+}
+
+.auth-active-part {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px 100px;
+}
+
+.auth-active-part-center {
+  max-width: 600px;
+}
+
+.auth-active-part {
+  flex-grow: 1;
+}
+
+.logo-container {
+  display: flex;
+  justify-content: center;
+}
+
+.auth-active-part .btn-sign-in {
+  width: 100%;
+  margin-top: 20px;
+}
+
+/*
+  TODO IMAGES
+ */
+.auth-container aside {
+  background-color: red;
+}
+
+.signup-cta {
+  text-align: center;
+  margin-top: 1.5em;
+}
+
+.auth-active-part-main {
+  width: 450px;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.auth-active-part-wrapper {
+  height: 100%;
+}

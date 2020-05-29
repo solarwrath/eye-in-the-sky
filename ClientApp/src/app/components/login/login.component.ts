@@ -35,7 +35,7 @@ import {animate, style, transition, trigger} from '@angular/animations';
   ]
 })
 export class LoginComponent {
-  public isPending: Observable<boolean> = this.store
+  public isLoginProcessing: Observable<boolean> = this.store
     .select(state => state.auth.authStatus)
     .pipe(map(authStatus => authStatus === AuthStatus.PENDING));
 
