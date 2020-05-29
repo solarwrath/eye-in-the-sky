@@ -7,15 +7,21 @@ import {AppState} from './reducers';
 import {Store} from '@ngrx/store';
 import {SignalRClientService} from '../signalr/signalr-client.service';
 import {loginFailed, loginSucceeded} from './auth.actions';
+import {resetMemorizedLink} from './auth-guard.actions';
 
 @Injectable()
 export class AuthEffects {
+  private memorizedLink: string[] | null = null;
+
   constructor(
     private actions: Actions,
     private signalrClient: SignalRClientService,
     private router: Router,
     private store: Store<AppState>,
   ) {
+    this.store
+      .select(state => state.authGuard.memorizedLink)
+      .subscribe(updatedMemorizedLink => this.memorizedLink = updatedMemorizedLink);
   }
 
   @Effect({dispatch: false})
@@ -26,7 +32,12 @@ export class AuthEffects {
         .subscribe((loginSuccessful: boolean) => {
             if (loginSuccessful) {
               this.store.dispatch(loginSucceeded());
-              this.router.navigate(['']);
+              if (this.memorizedLink !== null) {
+                this.router.navigate(this.memorizedLink);
+                this.store.dispatch(resetMemorizedLink());
+              } else {
+                this.router.navigate(['']);
+              }
             } else {
               this.store.dispatch(loginFailed());
               this.router.navigate(['login']);
