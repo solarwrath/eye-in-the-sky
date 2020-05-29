@@ -1,58 +1,8 @@
-<!--<div class="steps-container">
+<div class="steps-container">
   <nav class="steps-nav">
-    <div style="display: flex;flex-direction: column">
-      <a routerLink='/' class="header-text">Корпус</a>
-      <div>
-        {{campusSelectedId|async}}
-        Обраний корпус: <span #selectedCampusTitle></span>
-      </div>
-      <ng-scrollbar>
-        <ul class="navigation-list">
-          <li *ngFor="let campus of campuses" class="navigation-item">
-            <a (click)="onCampusSelect($event, campus)"
-               routerLinkActive="active active-campus">{{campus.name}}</a>
-          </li>
-        </ul>
-      </ng-scrollbar>
-    </div>
-
-    <ng-container *ngIf="selectedCampus !== null">
-      <div>
-        <a [routerLink]='[selectedCampus.name]|formEncodedUri' class="header-text">Поверх</a>
-        <ng-scrollbar style="max-height: 400px;">
-          <ul class="navigation-list">
-            <li *ngFor="let floor of selectedCampus.children" class="navigation-item">
-              <a [routerLink]='[selectedCampus.name, floor.name]|formEncodedUri'
-                 routerLinkActive="active active-floor">{{floor.name}}</a>
-            </li>
-          </ul>
-        </ng-scrollbar>
-      </div>
-
-      <ng-container *ngIf="selectedFloor !== null">
-        <div>
-          <a [routerLink]='[selectedCampus.name, selectedFloor.name]|formEncodedUri'
-             class="header-text">ПК</a>
-          <ng-scrollbar style="max-height: 400px;">
-            <ul class="navigation-list">
-              <li *ngFor="let pc of selectedFloor.children" class="navigation-item">
-                <a
-                  [routerLink]='[selectedCampus.name, selectedFloor.name, pc.name]|formEncodedUri'
-                  routerLinkActive="active active-pc">{{pc.name}}</a>
-              </li>
-            </ul>
-          </ng-scrollbar>
-        </div>
-      </ng-container>
-    </ng-container>
+    <app-campus-list></app-campus-list>
+    <app-floor-list></app-floor-list>
+    <app-room-list></app-room-list>
+    <app-pc-grid></app-pc-grid>
   </nav>
-
-  <main *ngIf="selectedPC !== null">
-    Data for PC: {{ selectedPC.name}}
-  </main>
 </div>
-
-<svg class="background">
-  <path #activePath id="activePath" stroke="green" d="" fill="none" [hidden]="firstTimeActivePathShown"></path>
-</svg>
--->

@@ -63,37 +63,39 @@ export class RouterEffects {
         if (action.payload.routerState.url !== this.previousURI) {
           this.previousURI = action.payload.routerState.url;
 
-          const encodedCampusTitle = action.payload.routerState.root.firstChild.params.campus;
-          if (encodedCampusTitle) {
-            const decodedCampusTitle = decodeURI(encodedCampusTitle);
-            const campusFromURI: Campus | null = this.campuses.find(campus => campus.title === decodedCampusTitle);
+          if (this.previousURI !== 'login') {
+            const encodedCampusTitle = action.payload.routerState.root.firstChild.params.campus;
+            if (encodedCampusTitle) {
+              const decodedCampusTitle = decodeURI(encodedCampusTitle);
+              const campusFromURI: Campus | null = this.campuses.find(campus => campus.title === decodedCampusTitle);
 
-            if (campusFromURI && campusFromURI !== this.selectedCampus) {
-              this.store.dispatch(selectCampus({campus: campusFromURI}));
+              if (campusFromURI && campusFromURI !== this.selectedCampus) {
+                this.store.dispatch(selectCampus({campus: campusFromURI}));
 
-              const encodedFloorTitle = action.payload.routerState.root.firstChild.params.floor;
-              if (encodedFloorTitle) {
-                const decodedFloorTitle = decodeURI(encodedFloorTitle);
-                const floorFromURI: Floor | null = this.floors.find(floor => floor.title === decodedFloorTitle);
+                const encodedFloorTitle = action.payload.routerState.root.firstChild.params.floor;
+                if (encodedFloorTitle) {
+                  const decodedFloorTitle = decodeURI(encodedFloorTitle);
+                  const floorFromURI: Floor | null = this.floors.find(floor => floor.title === decodedFloorTitle);
 
-                if (floorFromURI && floorFromURI !== this.selectedFloor) {
-                  this.store.dispatch(selectFloor({floor: floorFromURI}));
+                  if (floorFromURI && floorFromURI !== this.selectedFloor) {
+                    this.store.dispatch(selectFloor({floor: floorFromURI}));
 
-                  const encodedRoomTitle = action.payload.routerState.root.firstChild.params.room;
-                  if (encodedRoomTitle) {
-                    const decodedRoomTitle = decodeURI(encodedRoomTitle);
-                    const roomFromURI: Room | null = this.rooms.find(room => room.title === decodedRoomTitle);
+                    const encodedRoomTitle = action.payload.routerState.root.firstChild.params.room;
+                    if (encodedRoomTitle) {
+                      const decodedRoomTitle = decodeURI(encodedRoomTitle);
+                      const roomFromURI: Room | null = this.rooms.find(room => room.title === decodedRoomTitle);
 
-                    if (roomFromURI && roomFromURI !== this.selectedRoom) {
-                      this.store.dispatch(selectRoom({room: roomFromURI}));
+                      if (roomFromURI && roomFromURI !== this.selectedRoom) {
+                        this.store.dispatch(selectRoom({room: roomFromURI}));
 
-                      const encodedPCName = action.payload.routerState.root.firstChild.params.pc;
-                      if (encodedPCName) {
-                        const decodedPCName = decodeURI(encodedPCName);
-                        const pcFromURI: PC | null = this.pcs.find(pc => pc.pcName === decodedPCName);
+                        const encodedPCName = action.payload.routerState.root.firstChild.params.pc;
+                        if (encodedPCName) {
+                          const decodedPCName = decodeURI(encodedPCName);
+                          const pcFromURI: PC | null = this.pcs.find(pc => pc.pcName === decodedPCName);
 
-                        if (pcFromURI && pcFromURI !== this.selectedPC) {
-                          this.store.dispatch(selectPC({pc: pcFromURI}));
+                          if (pcFromURI && pcFromURI !== this.selectedPC) {
+                            this.store.dispatch(selectPC({pc: pcFromURI}));
+                          }
                         }
                       }
                     }

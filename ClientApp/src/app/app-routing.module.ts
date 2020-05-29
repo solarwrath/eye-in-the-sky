@@ -1,14 +1,18 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {MainComponent} from './main/main.component';
+import {LoginComponent} from './login/login.component';
+import {AuthGuard} from './auth/auth-guard';
+import {LoginRedirectGuard} from './auth/login-redirect-guard';
 
 const routes: Routes = [
-  {path: '', component: MainComponent, pathMatch: 'full'},
-  {path: ':campus/:floor/:room/:pc', component: MainComponent},
-  {path: ':campus/:floor/:room', component: MainComponent},
-  {path: ':campus/:floor', component: MainComponent},
-  {path: ':campus', component: MainComponent},
-  {path: '**', component: MainComponent}
+  {path: '', component: MainComponent, pathMatch: 'full', canActivate: [AuthGuard]},
+  {path: 'login', component: LoginComponent, canActivate: [LoginRedirectGuard]},
+  {path: ':campus/:floor/:room/:pc', component: MainComponent, canActivate: [AuthGuard]},
+  {path: ':campus/:floor/:room', component: MainComponent, canActivate: [AuthGuard]},
+  {path: ':campus/:floor', component: MainComponent, canActivate: [AuthGuard]},
+  {path: ':campus', component: MainComponent, canActivate: [AuthGuard]},
+  {path: '**', component: MainComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({

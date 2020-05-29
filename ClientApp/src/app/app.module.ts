@@ -23,7 +23,10 @@ import {RoomEffects} from './store/room.effects';
 import {FaIconLibrary, FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {faTimes} from '@fortawesome/free-solid-svg-icons';
 import {PCEffects} from './store/pc.effects';
-import { PcGridComponent } from './pc-grid/pc-grid.component';
+import {PcGridComponent} from './pc-grid/pc-grid.component';
+import {LoginComponent} from './login/login.component';
+import {AuthEffects} from './store/auth.effects';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -34,15 +37,17 @@ import { PcGridComponent } from './pc-grid/pc-grid.component';
     FloorListComponent,
     RoomListComponent,
     PcGridComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     AppRoutingModule,
     NgScrollbarModule,
     BrowserAnimationsModule,
     StoreModule.forRoot(reducers, {}),
     StoreDevtoolsModule.instrument({maxAge: 25, logOnly: environment.production}),
-    EffectsModule.forRoot([RouterEffects, CampusEffects, FloorEffects, RoomEffects, PCEffects]),
+    EffectsModule.forRoot([AuthEffects, RouterEffects, CampusEffects, FloorEffects, RoomEffects, PCEffects]),
     StoreRouterConnectingModule.forRoot(),
     FontAwesomeModule,
     NgScrollbarModule,
@@ -51,7 +56,7 @@ import { PcGridComponent } from './pc-grid/pc-grid.component';
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor(private library: FaIconLibrary){
+  constructor(private library: FaIconLibrary) {
     library.addIcons(faTimes);
   }
 }
