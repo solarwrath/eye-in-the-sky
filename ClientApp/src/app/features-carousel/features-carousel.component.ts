@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, ViewChild, ViewChildren, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {NguCarouselConfig} from '@ngu/carousel';
 
 @Component({

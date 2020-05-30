@@ -1,0 +1,43 @@
+<div class="logo-container">
+  <img src="assets/logo.svg" alt="Sauron's Sentry" class="logo">
+</div>
+<div class="auth-active-part-main">
+  <h1 class="page-title">Вхід</h1>
+  <form (ngSubmit)="tryLogin()" #form>
+    <div class="form-group">
+      <label for="username">Ім'я користувача:</label>
+      <input
+        type="text"
+        [formControl]="username"
+        required
+        id="username"
+        class="form-control"
+        placeholder="Ім'я користувача"
+      >
+    </div>
+    <div class="form-group">
+      <label for="password">Пароль:</label>
+      <input
+        type="password"
+        [formControl]="password"
+        required
+        id="password"
+        class="form-control"
+        placeholder="Пароль"
+      >
+    </div>
+    <button
+      type="submit"
+      [disabled]="form.invalid"
+      class="btn btn-primary btn-sign-in"
+    >
+      Ввійти
+    </button>
+    <div class="signup-cta">
+      Ще нема облікового запису? <a [routerLink]="[
+            '../',
+            'sign-up'
+            ]">Створіть його</a>
+    </div>
+  </form>
+</div>

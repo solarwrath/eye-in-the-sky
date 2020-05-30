@@ -1,0 +1,11 @@
+<div class="auth-container">
+  <main class="auth-active-part" [@main-part-route-animation]="currentMode">
+    <div class="auth-active-part-wrapper">
+        <app-login *ngIf="showLogin"></app-login>
+        <app-sign-up *ngIf="!showLogin"></app-sign-up>
+    </div>
+  </main>
+  <aside [@features-route-animation]="currentMode" class="features-aside">
+    <app-features-carousel></app-features-carousel>
+  </aside>
+</div>

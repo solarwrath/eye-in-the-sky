@@ -23,12 +23,14 @@ import {FaIconLibrary, FontAwesomeModule} from '@fortawesome/angular-fontawesome
 import {faTimes} from '@fortawesome/free-solid-svg-icons';
 import {PCEffects} from './core/store/pc/pc.effects';
 import {PcGridComponent} from './components/main-views/pc-grid/pc-grid.component';
-import {LoginComponent} from './components/login/login.component';
+import {LoginComponent} from './components/auth/login/login.component';
 import {AuthEffects} from './core/store/auth/auth.effects';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {LoaderComponent} from './components/loader/loader.component';
 import {FeaturesCarouselComponent} from './features-carousel/features-carousel.component';
 import {NguCarouselModule} from '@ngu/carousel';
+import { SignUpComponent } from './components/auth/sign-up/sign-up.component';
+import { AuthComponent } from './components/auth/auth.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +43,8 @@ import {NguCarouselModule} from '@ngu/carousel';
     LoginComponent,
     LoaderComponent,
     FeaturesCarouselComponent,
+    SignUpComponent,
+    AuthComponent,
   ],
   imports: [
     BrowserModule,

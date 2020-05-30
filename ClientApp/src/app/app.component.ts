@@ -6,11 +6,32 @@ import {Campus} from './core/models/campus.model';
 import {addFloor} from './core/store/floor/floor.actions';
 import {addRoom} from './core/store/room/room.actions';
 import {addPC} from './core/store/pc/pc.actions';
+import {RouterOutlet} from '@angular/router';
+import {animate, animateChild, group, query, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  animations: [
+    trigger('routeAnimations', [
+      transition('LoginPage => SignUpPage', [
+        query(':enter, :leave', [
+          style({
+            position: 'absolute',
+            left: 0,
+            width: '100%',
+            opacity: 0,
+            transform: 'scale(0) translateY(100%)',
+          }),
+        ]),
+        query(':enter', [
+          animate('600ms ease',
+            style({opacity: 1, transform: 'scale(1) translateY(0)'}))
+        ]),
+      ])
+    ])
+  ]
 })
 export class AppComponent implements OnInit {
   constructor(private store: Store<AppState>) {
@@ -110,5 +131,9 @@ export class AppComponent implements OnInit {
         }
       })
     );
+  }
+
+  prepareRoute(outlet: RouterOutlet) {
+    return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation'];
   }
 }

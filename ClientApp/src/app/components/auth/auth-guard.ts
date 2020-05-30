@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
 import {Store} from '@ngrx/store';
-import {AppState} from '../core/store/reducers';
-import AuthStatus from '../core/models/auth-status.enum';
-import {setMemorizedLink} from '../core/store/auth/guard/auth-guard.actions';
+import {AppState} from '../../core/store/reducers';
+import AuthStatus from '../../core/models/auth-status.enum';
+import {setMemorizedLink} from '../../core/store/auth/guard/auth-guard.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +23,10 @@ export class AuthGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     if (!this.canLogin) {
-      this.router.navigate(['login']);
+      this.router.navigate([
+        '/auth',
+        'login'
+      ]);
       this.store.dispatch(setMemorizedLink({link: route.url.map(urlSegment => urlSegment.path)}));
     }
 

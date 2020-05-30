@@ -1,9 +1,9 @@
 import {Component} from '@angular/core';
-import {AppState} from '../../core/store/reducers';
+import {AppState} from '../../../core/store/reducers';
 import {Store} from '@ngrx/store';
-import {tryLogInUser} from '../../core/store/auth/auth.actions';
+import {tryLogInUser} from '../../../core/store/auth/auth.actions';
 import {FormControl} from '@angular/forms';
-import AuthStatus from '../../core/models/auth-status.enum';
+import AuthStatus from '../../../core/models/auth-status.enum';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {animate, style, transition, trigger} from '@angular/animations';
