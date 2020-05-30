@@ -1,4 +1,5 @@
 :root {
+  --primary-color: #cf1515;
   --accent-color: #FFB913;
 }
 
@@ -57,4 +58,12 @@ a {
 
 body {
   color: black;
+}
+
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';
+
+
+.tile {
+  box-shadow: none !important;
 }

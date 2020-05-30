@@ -1,0 +1,42 @@
+.feature-title,
+.feature-text {
+  color: #fff;
+  text-align: center;
+  clear: both;
+}
+
+.feature-title {
+  font-weight: bold;
+  font-family: 'Roboto', sans-serif;
+  font-size: 36px;
+}
+
+.feature-text {
+  opacity: 0.8;
+  font-size: 18px;
+}
+
+.myPoint {
+  list-style-type: none;
+  text-align: center;
+  padding: 12px;
+  margin: 0;
+  white-space: nowrap;
+  overflow: auto;
+  box-sizing: border-box;
+}
+
+.myPoint li {
+  display: inline-block;
+  border-radius: 50%;
+  padding: 5px;
+  margin: 0 5px;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.25);
+  transition: 0.4s;
+  transition-timing-function: cubic-bezier(0.17, 0.67, 0.83, 0.67);
+}
+
+.myPoint li.active {
+  background: rgba(255, 255, 255, 1);
+}

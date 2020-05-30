@@ -30,9 +30,10 @@
             "styles": [
               "src/styles.scss",
               "node_modules/spinkit/spinkit.min.css",
-              "src/bootstrap.min.css"
+              "src/bootstrap.min.css",
             ],
-            "scripts": []
+            "scripts": [
+            ]
           },
           "configurations": {
             "production": {

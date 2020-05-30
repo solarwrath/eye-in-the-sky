@@ -27,6 +27,8 @@ import {LoginComponent} from './components/login/login.component';
 import {AuthEffects} from './core/store/auth/auth.effects';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {LoaderComponent} from './components/loader/loader.component';
+import {FeaturesCarouselComponent} from './features-carousel/features-carousel.component';
+import {NguCarouselModule} from '@ngu/carousel';
 
 @NgModule({
   declarations: [
@@ -38,6 +40,7 @@ import {LoaderComponent} from './components/loader/loader.component';
     PcGridComponent,
     LoginComponent,
     LoaderComponent,
+    FeaturesCarouselComponent,
   ],
   imports: [
     BrowserModule,
@@ -52,6 +55,7 @@ import {LoaderComponent} from './components/loader/loader.component';
     StoreRouterConnectingModule.forRoot(),
     FontAwesomeModule,
     NgScrollbarModule,
+    NguCarouselModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

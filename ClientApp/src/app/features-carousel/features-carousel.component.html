@@ -1,0 +1,17 @@
+<ngu-carousel #featuresCarousel [inputs]="carouselConfig" [dataSource]="features">
+  <!-- TODO Features illustration -->
+  <ngu-tile *nguCarouselDef="let feature;">
+    <div>
+      <p class="feature-title">{{feature.title}}</p>
+      <p class="feature-text">{{feature.text}}</p>
+    </div>
+  </ngu-tile>
+
+  <ul class="myPoint" NguCarouselPoint>
+    <li *ngFor="
+          let i of featuresCarousel.pointNumbers;"
+        [class.active]="i==featuresCarousel.activePoint"
+        (click)="featuresCarousel.moveTo(i)"
+    ></li>
+  </ul>
+</ngu-carousel>
