@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {animate, animateChild, group, query, state, style, transition, trigger} from '@angular/animations';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'app-auth',
@@ -21,40 +21,20 @@ import {animate, animateChild, group, query, state, style, transition, trigger} 
       )
     ]),
     trigger('main-part-route-animation', [
-      state('login', style({
-          left: '0',
-        }
-      )),
-      state('sign-up', style({
-          left: '50%',
-        }
-      )),
-     transition('login <=> sign-up', [
-        animate('1500ms ease')]
-      ),
-     transition('login => sign-up', [
-       query('app-login-component', [
-         style({
-           opacity: 1,
-           transform: 'scale(1)'
-         }),
-         animate('500ms', style({
-           opacity: 0,
-           transform: 'scale(0)'
-         })),
-       ]),
-       query('app-sign-up-component', [
-         style({
-           opacity: 1,
-           transform: 'scale(1)'
-         }),
-         animate('500ms', style({
-           opacity: 0,
-           transform: 'scale(0)'
-         })),
-       ]),
-     ])
-    ]),
+        state('login', style({
+            left: '0',
+          }
+        )),
+        state('sign-up', style({
+            left: '50%',
+          }
+        )),
+        transition('login <=> sign-up', [
+            animate('1500ms ease')
+          ]
+        ),
+      ]
+    )
   ]
 })
 
