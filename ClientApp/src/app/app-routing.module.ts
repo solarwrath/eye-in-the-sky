@@ -6,17 +6,17 @@ import {AuthComponent} from './components/auth/auth.component';
 import {LoginAndSignUpRedirectGuard} from './components/auth/login-and-sign-up-redirect-guard.service';
 
 const routes: Routes = [
-  {path: '', component: MainComponent, pathMatch: 'full', canActivate: [AuthGuard]},
+  {path: '', component: MainComponent, pathMatch: 'full', canActivate: [AuthGuard], data: {reuse: true}},
   {
     path: 'auth/:action',
     component: AuthComponent,
     canActivate: [LoginAndSignUpRedirectGuard],
   },
-  {path: ':campus/:floor/:room/:pc', component: MainComponent, canActivate: [AuthGuard]},
-  {path: ':campus/:floor/:room', component: MainComponent, canActivate: [AuthGuard]},
-  {path: ':campus/:floor', component: MainComponent, canActivate: [AuthGuard]},
-  {path: ':campus', component: MainComponent, canActivate: [AuthGuard]},
-  {path: '**', component: MainComponent, canActivate: [AuthGuard]}
+  {path: ':campus/:floor/:room/:pc', component: MainComponent, canActivate: [AuthGuard], data: {reuse: true}},
+  {path: ':campus/:floor/:room', component: MainComponent, canActivate: [AuthGuard], data: {reuse: true}},
+  {path: ':campus/:floor', component: MainComponent, canActivate: [AuthGuard], data: {reuse: true}},
+  {path: ':campus', component: MainComponent, canActivate: [AuthGuard], data: {reuse: true}},
+  {path: '**', component: MainComponent, canActivate: [AuthGuard], data: {reuse: true}}
 ];
 
 @NgModule({

@@ -33,6 +33,8 @@ import {SignUpComponent} from './components/auth/sign-up/sign-up.component';
 import {AuthComponent} from './components/auth/auth.component';
 import {ErrorComponent} from './components/error/error.component';
 import {SuccessComponent} from './components/success/success.component';
+import {RouteReuseStrategy} from '@angular/router';
+import {RouteReuseSelectedItemsStrategy} from './core/route-reuse-strategy';
 
 @NgModule({
   declarations: [
@@ -65,7 +67,10 @@ import {SuccessComponent} from './components/success/success.component';
     NgScrollbarModule,
     NguCarouselModule,
   ],
-  providers: [],
+  providers: [{
+    provide: RouteReuseStrategy,
+    useClass: RouteReuseSelectedItemsStrategy,
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule {
