@@ -1,7 +1,8 @@
+<app-loader *ngIf="(showLoader|async)" @crossfade></app-loader>
 <div class="auth-container">
   <main class="auth-active-part" [@main-part-route-animation]="currentMode">
     <div class="auth-active-part-wrapper">
-      <app-login *ngIf="showLogin; else signUp"></app-login>
+      <app-login *ngIf="currentMode === 'login'; else signUp"></app-login>
       <ng-template #signUp>
         <app-sign-up></app-sign-up>
       </ng-template>

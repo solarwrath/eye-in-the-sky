@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../core/store/reducers';
-import AuthStatus from '../../core/models/auth-status.enum';
+import LoginStatus from '../../core/models/login-status.enum';
 import {setMemorizedLink} from '../../core/store/auth/guard/auth-guard.actions';
 
 @Injectable({
@@ -17,8 +17,8 @@ export class AuthGuard implements CanActivate {
   ) {
     // Injectables do not work with lifecycle hooks like ngOnInit, services require it so going for constructor subscription
     this.store
-      .select(state => state.auth.authStatus)
-      .subscribe(updatedAuthStatus => this.canLogin = updatedAuthStatus === AuthStatus.LOGGED_IN);
+      .select(state => state.auth.loginStatus)
+      .subscribe(updatedAuthStatus => this.canLogin = updatedAuthStatus === LoginStatus.LOGGED_IN);
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {

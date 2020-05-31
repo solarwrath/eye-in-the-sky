@@ -6,7 +6,7 @@ import {Router} from '@angular/router';
 import {AppState} from '../reducers';
 import {Store} from '@ngrx/store';
 import {SignalRClientService} from '../../signalr/signalr-client.service';
-import {loginFailed, loginSucceeded} from './auth.actions';
+import {loginFailed, loginSucceeded, resetSignUpStatus, signUpFailed, signUpSucceeded} from './auth.actions';
 import {resetMemorizedLink} from './guard/auth-guard.actions';
 
 @Injectable()
@@ -29,11 +29,11 @@ export class AuthEffects {
   handleLogin = this.actions.pipe(
     ofType(AuthActions.tryLogInUser),
     tap((action) => {
-      const subscription = this.signalrClient.checkIdentity(action.username, action.password)
+      this.signalrClient.checkIdentity(action.username, action.password)
         .subscribe((loginSuccessful: boolean) => {
             if (loginSuccessful) {
               this.store.dispatch(loginSucceeded());
-              if (this.memorizedLink !== null) {
+              if (this.memorizedLink !== null && this.memorizedLink.length > 0) {
                 this.router.navigate(this.memorizedLink);
                 this.store.dispatch(resetMemorizedLink());
               } else {
@@ -41,7 +41,26 @@ export class AuthEffects {
               }
             } else {
               this.store.dispatch(loginFailed());
+              this.store.dispatch(resetMemorizedLink());
               this.router.navigate(['login']);
+            }
+          }
+        );
+    })
+  );
+
+  @Effect({dispatch: false})
+  handleSignUp = this.actions.pipe(
+    ofType(AuthActions.trySignUpUser),
+    tap((action) => {
+      this.signalrClient.signUp(action.username, action.password)
+        .subscribe((signUpSuccessful: boolean) => {
+            this.store.dispatch(resetMemorizedLink());
+            if (signUpSuccessful) {
+              this.store.dispatch(signUpSucceeded());
+              this.router.navigate(['']);
+            } else {
+              this.store.dispatch(signUpFailed());
             }
           }
         );

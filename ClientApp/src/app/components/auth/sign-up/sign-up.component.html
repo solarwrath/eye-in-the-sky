@@ -1,11 +1,9 @@
-<app-loader *ngIf="(isLoginProcessing|async)" @crossfadeLogin></app-loader>
-
 <div class="logo-container">
   <img src="assets/logo.svg" alt="Sauron's Sentry" class="logo">
 </div>
 <div class="auth-active-part-main">
   <h1 class="page-title">Реєстрація</h1>
-  <form (ngSubmit)="tryLogin()" #form>
+  <form (ngSubmit)="trySignUp()" #form>
     <div class="form-group">
       <label for="username">Ім'я користувача:</label>
       <input

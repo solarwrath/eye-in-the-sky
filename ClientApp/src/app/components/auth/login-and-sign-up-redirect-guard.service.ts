@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../core/store/reducers';
-import AuthStatus from '../../core/models/auth-status.enum';
+import LoginStatus from '../../core/models/login-status.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -15,9 +15,9 @@ export class LoginAndSignUpRedirectGuard implements CanActivate {
   ) {
     // Injectables do not work with lifecycle hooks like ngOnInit, services require it so going for constructor subscription
     this.store
-      .select(state => state.auth.authStatus)
+      .select(state => state.auth.loginStatus )
       .subscribe(updatedAuthStatus => {
-        this.isLoggedIn = updatedAuthStatus === AuthStatus.LOGGED_IN;
+        this.isLoggedIn = updatedAuthStatus === LoginStatus.LOGGED_IN;
       });
   }
 

@@ -1,11 +1,8 @@
 import {Component} from '@angular/core';
-import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
-import AuthStatus from '../../../core/models/auth-status.enum';
-import {FormControl} from '@angular/forms';
+import {FormControl, Validators} from '@angular/forms';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../../core/store/reducers';
-import {tryLogInUser} from '../../../core/store/auth/auth.actions';
+import { trySignUpUser} from '../../../core/store/auth/auth.actions';
 import {animate, style, transition, trigger} from '@angular/animations';
 
 @Component({
@@ -35,20 +32,16 @@ import {animate, style, transition, trigger} from '@angular/animations';
   ]
 })
 export class SignUpComponent {
-  public isLoginProcessing: Observable<boolean> = this.store
-    .select(state => state.auth.authStatus)
-    .pipe(map(authStatus => authStatus === AuthStatus.PENDING));
-
-  public username = new FormControl('');
-  public password = new FormControl('');
-  public confirmPassword = new FormControl('');
+  public username = new FormControl('', Validators.required);
+  public password = new FormControl('', Validators.required);
+  public confirmPassword = new FormControl('', [Validators.required]);
 
   constructor(
     private store: Store<AppState>,
   ) {
   }
 
-  public tryLogin(): void {
-    this.store.dispatch(tryLogInUser({username: this.username.value, password: this.password.value}));
+  public trySignUp(): void {
+    this.store.dispatch(trySignUpUser({username: this.username.value, password: this.password.value}));
   }
 }
