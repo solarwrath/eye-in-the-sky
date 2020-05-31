@@ -1,0 +1,9 @@
+.pc-grid-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+:host {
+  background: #111;
+  flex-grow: 1;
+}

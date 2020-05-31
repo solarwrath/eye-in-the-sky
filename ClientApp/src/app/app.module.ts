@@ -35,6 +35,7 @@ import {ErrorComponent} from './components/error/error.component';
 import {SuccessComponent} from './components/success/success.component';
 import {RouteReuseStrategy} from '@angular/router';
 import {RouteReuseSelectedItemsStrategy} from './core/route-reuse-strategy';
+import { PcDataComponent } from './components/main-views/pc-data/pc-data.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import {RouteReuseSelectedItemsStrategy} from './core/route-reuse-strategy';
     AuthComponent,
     ErrorComponent,
     SuccessComponent,
+    PcDataComponent,
   ],
   imports: [
     BrowserModule,

@@ -128,8 +128,35 @@ export class AppComponent implements OnInit {
     );
 
     this.store.dispatch(addPC({
+      pc: {
+        id: 2,
+        roomId: 1,
+        pcName: 'pcaName',
+        data: 'pcD2ata'
+      }
+    }));
+
+    this.store.dispatch(addPC({
+      pc: {
+        id: 3,
+        roomId: 1,
+        pcName: 'pca2Name',
+        data: 'pcD2ata'
+      }
+    }));
+
+    this.store.dispatch(addPC({
         pc: {
-          id: 2,
+          id: 4,
+          roomId: 1,
+          pcName: 'pcaNdsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssame',
+          data: 'pcD2ata'
+        }
+      })
+    );
+    this.store.dispatch(addPC({
+        pc: {
+          id: 5,
           roomId: 1,
           pcName: 'pcaName',
           data: 'pcD2ata'

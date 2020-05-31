@@ -1,0 +1,24 @@
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-left: 0;
+  color: #ffffff;
+  width: calc(100%/4);
+  height: calc(100vh/12);
+  padding: 10px;
+}
+
+:host:nth-of-type(4n+1) {
+  border-left: 0;
+}
+
+:host:nth-of-type(n-4) {
+  border-top: 0;
+}
+
+.pc-name {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}

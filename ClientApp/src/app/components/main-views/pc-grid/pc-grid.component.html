@@ -1,7 +1,3 @@
-<div>
-  <div *ngFor="let pc of pcs|async">
-    <p *ngIf="pc == selectedPC">selected</p>
-    <p>{{pc.pcName}}</p>
-    <p>{{pc.data}}</p>
-  </div>
+<div class="pc-grid-container">
+  <app-pc-data [pc]="pc" [selected]="pc === selectedPC" *ngFor="let pc of pcs|async">></app-pc-data>
 </div>
