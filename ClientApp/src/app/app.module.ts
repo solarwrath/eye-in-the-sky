@@ -36,6 +36,9 @@ import {SuccessComponent} from './components/success/success.component';
 import {RouteReuseStrategy} from '@angular/router';
 import {RouteReuseSelectedItemsStrategy} from './core/route-reuse-strategy';
 import { PcDataComponent } from './components/main-views/pc-data/pc-data.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import { PcDataPopupComponent } from './components/main-views/pc-data/pc-data-popup/pc-data-popup.component';
+import {MatButtonModule} from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -53,6 +56,7 @@ import { PcDataComponent } from './components/main-views/pc-data/pc-data.compone
     ErrorComponent,
     SuccessComponent,
     PcDataComponent,
+    PcDataPopupComponent,
   ],
   imports: [
     BrowserModule,
@@ -68,6 +72,8 @@ import { PcDataComponent } from './components/main-views/pc-data/pc-data.compone
     FontAwesomeModule,
     NgScrollbarModule,
     NguCarouselModule,
+    MatDialogModule,
+    MatButtonModule,
   ],
   providers: [{
     provide: RouteReuseStrategy,

@@ -1,3 +1,8 @@
 <div class="pc-grid-container">
-  <app-pc-data [pc]="pc" [selected]="pc === selectedPC" *ngFor="let pc of pcs|async">></app-pc-data>
+  <app-pc-data
+    [pc]="pc"
+    [selected]="pc === selectedPC"
+    *ngFor="let pc of pcs|async"
+  >
+  </app-pc-data>
 </div>

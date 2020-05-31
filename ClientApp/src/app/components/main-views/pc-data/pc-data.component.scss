@@ -2,12 +2,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid rgba(255, 255, 255, 0.9);
-  border-left: 0;
-  color: #ffffff;
   width: calc(100%/4);
   height: calc(100vh/12);
   padding: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-left: 0;
+  color: #ffffff;
+  cursor: pointer;
 }
 
 :host:nth-of-type(4n+1) {
