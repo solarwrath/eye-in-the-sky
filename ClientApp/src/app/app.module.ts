@@ -20,7 +20,7 @@ import {FloorListComponent} from './components/main-views/floor-list/floor-list.
 import {RoomListComponent} from './components/main-views/room-list/room-list.component';
 import {RoomEffects} from './core/store/room/room.effects';
 import {FaIconLibrary, FontAwesomeModule} from '@fortawesome/angular-fontawesome';
-import {faTimes} from '@fortawesome/free-solid-svg-icons';
+import {faExclamationCircle, faTimes} from '@fortawesome/free-solid-svg-icons';
 import {PCEffects} from './core/store/pc/pc.effects';
 import {PcGridComponent} from './components/main-views/pc-grid/pc-grid.component';
 import {LoginComponent} from './components/auth/login/login.component';
@@ -31,6 +31,7 @@ import {FeaturesCarouselComponent} from './features-carousel/features-carousel.c
 import {NguCarouselModule} from '@ngu/carousel';
 import { SignUpComponent } from './components/auth/sign-up/sign-up.component';
 import { AuthComponent } from './components/auth/auth.component';
+import { ErrorComponent } from './components/error/error.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { AuthComponent } from './components/auth/auth.component';
     FeaturesCarouselComponent,
     SignUpComponent,
     AuthComponent,
+    ErrorComponent,
   ],
   imports: [
     BrowserModule,
@@ -66,6 +68,6 @@ import { AuthComponent } from './components/auth/auth.component';
 })
 export class AppModule {
   constructor(private library: FaIconLibrary) {
-    library.addIcons(faTimes);
+    library.addIcons(faTimes, faExclamationCircle);
   }
 }

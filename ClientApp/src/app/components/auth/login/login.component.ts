@@ -3,6 +3,9 @@ import {AppState} from '../../../core/store/reducers';
 import {Store} from '@ngrx/store';
 import {tryLogInUser} from '../../../core/store/auth/auth.actions';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
+import LoginStatus from '../../../core/models/login-status.enum';
 
 @Component({
   selector: 'app-login',
@@ -14,6 +17,20 @@ export class LoginComponent {
     username: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required]),
   });
+
+  public loginSuccessful: Observable<boolean | null> =
+    this.store.select(state => state.auth.loginStatus)
+      .pipe(map(loginStatus => {
+        switch (loginStatus) {
+          case LoginStatus.LOGGED_IN:
+            return true;
+          case LoginStatus.LOGIN_FAILED:
+            return false;
+          case LoginStatus.PENDING:
+          case LoginStatus.NO_STATUS:
+            return null;
+        }
+      }));
 
   constructor(
     private store: Store<AppState>,

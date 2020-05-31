@@ -9,7 +9,7 @@ export interface AuthState {
 }
 
 const initialState: AuthState = {
-  loginStatus: LoginStatus.NOT_LOGGED_IN,
+  loginStatus: LoginStatus.NO_STATUS,
   signUpStatus: SignUpStatus.NO_STATUS,
 };
 
@@ -25,13 +25,19 @@ export const _authReducer = createReducer(
   on(AuthActions.loginFailed, (state) => {
     return {
       ...state,
-      loginStatus: LoginStatus.NOT_LOGGED_IN,
+      loginStatus: LoginStatus.LOGIN_FAILED,
     };
   }),
   on(AuthActions.loginSucceeded, (state) => {
     return {
       ...state,
       loginStatus: LoginStatus.LOGGED_IN,
+    };
+  }),
+  on(AuthActions.resetLoginStatus, (state) => {
+    return {
+      ...state,
+      loginStatus: LoginStatus.NO_STATUS,
     };
   }),
   on(AuthActions.trySignUpUser, (state) => {
