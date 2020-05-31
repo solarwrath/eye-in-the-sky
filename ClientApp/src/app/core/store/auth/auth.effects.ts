@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Actions, Effect, ofType} from '@ngrx/effects';
 import * as AuthActions from './auth.actions';
-import {loginFailed, loginSucceeded, resetLoginStatus, signUpFailed, signUpSucceeded} from './auth.actions';
+import {loginFailed, loginSucceeded, resetLoginStatus, resetSignUpStatus, signUpFailed, signUpSucceeded} from './auth.actions';
 import {tap} from 'rxjs/operators';
 import {Router} from '@angular/router';
 import {AppState} from '../reducers';
@@ -9,11 +9,13 @@ import {Store} from '@ngrx/store';
 import {SignalRClientService} from '../../signalr/signalr-client.service';
 import {resetMemorizedLink} from './guard/auth-guard.actions';
 import LoginStatus from '../../models/login-status.enum';
+import SignUpStatus from '../../models/sign-up-status.enum';
 
 @Injectable()
 export class AuthEffects {
   private memorizedLink: string[] | null = null;
   private loginStatus: LoginStatus;
+  private signUpStatus: SignUpStatus;
 
   constructor(
     private actions: Actions,
@@ -29,6 +31,10 @@ export class AuthEffects {
     this.store
       .select(state => state.auth.loginStatus)
       .subscribe(newLoginStatus => this.loginStatus = newLoginStatus);
+
+    this.store
+      .select(state => state.auth.signUpStatus)
+      .subscribe(newSignUpStatus => this.signUpStatus = newSignUpStatus);
   }
 
   @Effect({dispatch: false})
@@ -81,6 +87,12 @@ export class AuthEffects {
             } else {
               this.store.dispatch(signUpFailed());
             }
+
+            setTimeout(() => {
+              if (this.signUpStatus !== SignUpStatus.PENDING && this.signUpStatus !== SignUpStatus.NO_STATUS) {
+                this.store.dispatch(resetSignUpStatus());
+              }
+            }, 10000);
           }
         );
     })

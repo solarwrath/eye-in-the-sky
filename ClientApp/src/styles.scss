@@ -10,9 +10,10 @@
 
 .header-text {
   font-family: 'Roboto', sans-serif;
-  font-size: 64px;
+  font-size: 42px;
   font-weight: 700;
   margin-bottom: 0.35em;
+  color: #ffffff;
 }
 
 a {
@@ -25,14 +26,6 @@ a {
   display: flex;
   flex-wrap: nowrap;
   justify-content: flex-start;
-  margin-left: -15px;
-  margin-right: -15px;
-  padding: 30px;
-}
-
-.steps-container > *, .steps-nav > * {
-  padding-left: 15px;
-  padding-right: 15px;
 }
 
 .navigation-list {
@@ -43,8 +36,6 @@ a {
 
 .navigation-item > a {
   display: inline-block;
-  border-bottom: 2px solid #111;
-  margin: 10px 5px;
   text-align: center;
   width: 100%;
 }

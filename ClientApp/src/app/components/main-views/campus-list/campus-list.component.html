@@ -1,20 +1,13 @@
 <div class="flex flex-column">
+  <div class="list-icon-wrapper">
+    <div class="list-icon">
+      <fa-icon icon="home" size="4x"></fa-icon>
+    </div>
+  </div>
   <a (click)="onDeselectCampus()" class="header-text cursor-pointer">Корпус</a>
 
-  <div class="list-selected-item">
-    <h2>
-      Обраний корпус:
-      <br>
-    </h2>
-    <div>
-      <span #selectedCampusTitle></span>
-      <fa-icon (click)="onDeselectCampus()"
-               *ngIf="selectedCampus !== null"
-               icon="times"
-               class="cursor-pointer"
-      >
-      </fa-icon>
-    </div>
+  <div class="list-selected-item navigation-item">
+    <span #selectedCampusTitle></span>
   </div>
 
   <ng-scrollbar>

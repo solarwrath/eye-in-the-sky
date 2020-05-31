@@ -6,6 +6,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import LoginStatus from '../../../core/models/login-status.enum';
+import SignUpStatus from '../../../core/models/sign-up-status.enum';
 
 @Component({
   selector: 'app-login',
@@ -28,6 +29,20 @@ export class LoginComponent {
             return false;
           case LoginStatus.PENDING:
           case LoginStatus.NO_STATUS:
+            return null;
+        }
+      }));
+
+  public signUpSuccessful: Observable<boolean | null> =
+    this.store.select(state => state.auth.signUpStatus)
+      .pipe(map(signUpStatus => {
+        switch (signUpStatus) {
+          case SignUpStatus.SIGN_UP_SUCCESSFUL:
+            return true;
+          case SignUpStatus.SIGN_UP_FAILED:
+            return false;
+          case SignUpStatus.PENDING:
+          case SignUpStatus.NO_STATUS:
             return null;
         }
       }));

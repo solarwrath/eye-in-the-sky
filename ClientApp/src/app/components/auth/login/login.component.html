@@ -4,11 +4,15 @@
 <div class="auth-active-part-main">
   <h1 class="page-title">Вхід</h1>
   <form (ngSubmit)="tryLogin()" [formGroup]="loginForm">
-    <!-- TODO Style -->
     <app-error
       *ngIf="(loginSuccessful|async) === false"
       message="Виникла помилка при вході! Перевірте введені дані!">
     </app-error>
+    <app-success
+      *ngIf="(signUpSuccessful|async) === true"
+      message="Ви успішно зареєструвалися!">
+    </app-success>
+
     <div class="form-group">
       <label for="username">Ім'я користувача:</label>
       <input
