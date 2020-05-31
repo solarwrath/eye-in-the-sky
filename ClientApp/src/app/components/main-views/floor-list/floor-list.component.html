@@ -1,23 +1,18 @@
 <div class="flex flex-column">
-  <a class="header-text cursor-pointer" (click)="onDeselectFloor()">Поверх</a>
-
-  <div class="list-selected-item">
-    <h2>
-      Обраний поверх:
-      <br>
-    </h2>
-    <div>
-      <span #selectedFloorTitle></span>
-      <fa-icon (click)="onDeselectFloor()"
-               *ngIf="selectedFloor !== null"
-               icon="times"
-               class="cursor-pointer"
-      ></fa-icon>
+  <div class="selection-list-icon-wrapper">
+    <div class="selection-list-icon">
+      <fa-icon icon="layer-group" size="4x"></fa-icon>
     </div>
   </div>
 
-  <ng-scrollbar>
-    <ul class="navigation-list">
+  <a (click)="onDeselectFloor()" class="selection-list-title">Поверх</a>
+
+  <div class="selection-list-element selection-list-selected-item">
+    <span #selectedFloorTitle></span>
+  </div>
+
+  <ng-scrollbar class="selection-list-scroll">
+    <ul class="selection-list">
       <li *ngFor="let floor of availableForSelectionFloors|async" class="selection-list-element">
         <a (click)="onSelectFloor($event, floor)">{{floor.title}}</a>
       </li>

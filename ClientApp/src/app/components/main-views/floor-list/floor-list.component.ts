@@ -22,6 +22,7 @@ export class FloorListComponent implements OnInit, AfterViewInit {
 
       return null;
     });
+
   public selectedFloor: Floor | null = null;
 
   @ViewChild('selectedFloorTitle')

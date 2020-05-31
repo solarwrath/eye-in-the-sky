@@ -1,24 +1,20 @@
 <div class="flex flex-column">
-  <a class="header-text cursor-pointer" (click)="onDeselectRoom()">Приміщення</a>
-
-  <div class="list-selected-item">
-    <h2>
-      Обране приміщення:
-      <br>
-    </h2>
-    <div>
-      <span #selectedRoomTitle></span>
-      <fa-icon (click)="onDeselectRoom()"
-               *ngIf="selectedRoom !== null"
-               icon="times"
-               class="cursor-pointer"></fa-icon>
+  <div class="selection-list-icon-wrapper">
+    <div class="selection-list-icon">
+      <fa-icon icon="th" size="4x"></fa-icon>
     </div>
   </div>
 
-  <ng-scrollbar>
-    <ul class="navigation-list">
-      <li *ngFor="let classroom of availableForSelectionRooms|async" class="selection-list-element">
-        <a (click)="onSelectRoom($event, classroom)">{{classroom.title}}</a>
+  <a (click)="onDeselectRoom()" class="selection-list-title">Приміщення</a>
+
+  <div class="selection-list-element selection-list-selected-item">
+    <span #selectedRoomTitle></span>
+  </div>
+
+  <ng-scrollbar class="selection-list-scroll">
+    <ul class="selection-list">
+      <li *ngFor="let room of availableForSelectionRooms|async" class="selection-list-element">
+        <a (click)="onSelectRoom($event, room)">{{room.title}}</a>
       </li>
     </ul>
   </ng-scrollbar>

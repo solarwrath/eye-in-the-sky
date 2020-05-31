@@ -1,0 +1,75 @@
+:host {
+  padding: 20px 75px;
+  background-image: linear-gradient(150deg, #e52d27, #b31217);
+  color: #fff;
+  border-right: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+.selection-list-icon-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 15px;
+}
+
+.selection-list-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 180px;
+  height: 180px;
+  opacity: 0.85;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 50%;
+}
+
+.selection-list-title {
+  display: inline-block;
+  width: 100%;
+  font-size: 32px;
+  text-align: center;
+  margin: 20px 0;
+}
+
+.selection-list-title,
+.selection-list-title:hover {
+  color: #ffffff;
+}
+
+.selection-list {
+  padding: 0;
+}
+
+ng-scrollbar {
+  width: calc(100% + 150px);
+  margin-left: -75px;
+  max-width: none !important;
+  max-height: 556px;
+}
+
+.selection-list-element {
+  border-top: 1px solid rgba(255, 255, 255, 0.4);
+  padding-top: 8px;
+  padding-bottom: 8px;
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.selection-list-element:last-of-type {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.selection-list-element > a {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  color: #ffffff;
+}
+
+.selection-list-selected-item {
+  width: calc(100% + 150px);
+  margin-left: -75px;
+  color: #ffffff;
+  text-align: center;
+  border-bottom: 0 !important;
+  background-color: #7f0000;
+}
