@@ -10,7 +10,7 @@
     <span #selectedCampusTitle></span>
   </div>
 
-  <ng-scrollbar>
+  <ng-scrollbar class="navigation-scroll">
     <ul class="navigation-list">
       <li *ngFor="let campus of availableForSelectionCampuses|async" class="navigation-item">
         <a (click)="onSelectCampus($event, campus)">{{campus.title}}</a>

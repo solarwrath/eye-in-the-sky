@@ -72,3 +72,7 @@ body {
 .text-primary {
   color: var(--primary-color);
 }
+
+scrollbar-y {
+  --scrollbar-thumb-color: rgba(0, 0, 0, 0.4);
+}
