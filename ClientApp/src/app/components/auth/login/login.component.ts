@@ -2,11 +2,7 @@ import {Component} from '@angular/core';
 import {AppState} from '../../../core/store/reducers';
 import {Store} from '@ngrx/store';
 import {tryLogInUser} from '../../../core/store/auth/auth.actions';
-import {FormControl, RequiredValidator, Validators} from '@angular/forms';
-import LoginStatus from '../../../core/models/login-status.enum';
-import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
-import {animate, style, transition, trigger} from '@angular/animations';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -14,8 +10,10 @@ import {animate, style, transition, trigger} from '@angular/animations';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
-  public username = new FormControl('', [Validators.required]);
-  public password = new FormControl('', [Validators.required]);
+  public loginForm = new FormGroup({
+    username: new FormControl('', [Validators.required]),
+    password: new FormControl('', [Validators.required]),
+  });
 
   constructor(
     private store: Store<AppState>,
@@ -23,6 +21,6 @@ export class LoginComponent {
   }
 
   public tryLogin(): void {
-    this.store.dispatch(tryLogInUser({username: this.username.value, password: this.password.value}));
+    this.store.dispatch(tryLogInUser({username: this.loginForm.value.username, password: this.loginForm.value.password}));
   }
 }

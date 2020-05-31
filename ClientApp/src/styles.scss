@@ -64,7 +64,15 @@ body {
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';
 
-
 .tile {
   box-shadow: none !important;
+}
+
+.btn-primary.disabled, .btn-primary:disabled {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.ng-invalid {
+  border-color: red;
 }

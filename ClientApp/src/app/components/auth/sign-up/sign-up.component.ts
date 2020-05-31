@@ -1,8 +1,8 @@
 import {Component} from '@angular/core';
-import {FormControl, Validators} from '@angular/forms';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../../core/store/reducers';
-import { trySignUpUser} from '../../../core/store/auth/auth.actions';
+import {trySignUpUser} from '../../../core/store/auth/auth.actions';
 import {animate, style, transition, trigger} from '@angular/animations';
 
 @Component({
@@ -32,9 +32,18 @@ import {animate, style, transition, trigger} from '@angular/animations';
   ]
 })
 export class SignUpComponent {
-  public username = new FormControl('', Validators.required);
-  public password = new FormControl('', Validators.required);
-  public confirmPassword = new FormControl('', [Validators.required]);
+  public signUpForm = new FormGroup({
+      username: new FormControl('', [Validators.required]),
+      password: new FormControl('', [Validators.required]),
+      confirmPassword: new FormControl('', [Validators.required]),
+    },
+    (group: FormGroup) => {
+      const password = group.get('password').value;
+      const confirmPassword = group.get('confirmPassword').value;
+
+      return password === confirmPassword ? null : {passWordConfirmationFail: true};
+    }
+  );
 
   constructor(
     private store: Store<AppState>,
@@ -42,6 +51,6 @@ export class SignUpComponent {
   }
 
   public trySignUp(): void {
-    this.store.dispatch(trySignUpUser({username: this.username.value, password: this.password.value}));
+    this.store.dispatch(trySignUpUser({username: this.signUpForm.value.username, password: this.signUpForm.value.password}));
   }
 }
