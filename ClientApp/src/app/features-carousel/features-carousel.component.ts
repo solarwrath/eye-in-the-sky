@@ -9,22 +9,19 @@ import {NguCarouselConfig} from '@ngu/carousel';
 export class FeaturesCarouselComponent implements OnInit {
   public features: Feature[] = [
     {
-      id: 0,
       title: 'Моніторінг',
       text: 'Проводіть перевірки стану ваших машин у режимі реального часу',
-      image: '',
+      image: 'features-monitoring.png',
     },
     {
-      id: 1,
       title: 'Аналіз Даних(WIP)',
       text: 'Інтерпретуйте зібрані дані, щоб виявити потенційні проблеми',
-      image: '',
+      image: 'features-analytics.png',
     },
     {
-      id: 2,
       title: 'Віддалене керування (WIP)',
       text: 'Зручно викликайте RPC прямо з браузеру',
-      image: '',
+      image: 'features-rpc.png',
     },
   ];
 
@@ -46,17 +43,14 @@ export class FeaturesCarouselComponent implements OnInit {
   };
 
   constructor(private cd: ChangeDetectorRef) {
-
   }
 
   ngOnInit(): void {
     this.cd.detectChanges();
   }
-
 }
 
 interface Feature {
-  id: number;
   title: string;
   text: string;
   image: string;

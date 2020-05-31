@@ -1,7 +1,10 @@
 <ngu-carousel #featuresCarousel [inputs]="carouselConfig" [dataSource]="features">
-  <!-- TODO Features illustration -->
   <ngu-tile *nguCarouselDef="let feature;">
-    <div>
+    <div class="feature-image-container">
+      <div class="feature-image" [ngStyle]="{'background-image': 'url(../../../assets/' + feature.image + ')'}">
+      </div>
+    </div>
+    <div class="center-column">
       <p class="feature-title">{{feature.title}}</p>
       <p class="feature-text">{{feature.text}}</p>
     </div>
