@@ -1,14 +1,25 @@
+.steps-container,
+.steps-nav {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+}
+
 .steps-container {
   max-height: 100vh;
   height: 100vh;
 }
 
-.background {
+.steps-nav {
+  position: relative;
+}
+
+.selection-lists-background {
   position: absolute;
-  width: 100%;
-  height: 100%;
-  border: 2px solid red;
-  z-index: -1;
   top: 0;
   left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background-image: linear-gradient(150deg, #e52d27, #8d0e12);
 }
