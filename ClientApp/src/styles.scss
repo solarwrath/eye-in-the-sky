@@ -61,9 +61,6 @@ body {
   color: black;
 }
 
-/* Importing Bootstrap SCSS file. */
-@import '~bootstrap/scss/bootstrap';
-
 .tile {
   box-shadow: none !important;
 }
@@ -73,6 +70,14 @@ body {
   border-color: var(--primary-color);
 }
 
-.ng-invalid {
+.ng-invalid.ng-touched {
   border-color: red;
+}
+
+.text-danger {
+  color: red;
+}
+
+.text-primary {
+  color: var(--primary-color);
 }

@@ -41,11 +41,14 @@
     >
       Ввійти
     </button>
-    <div class="signup-cta">
-      Ще нема облікового запису? <a [routerLink]="[
+    <div class="login-cta">
+      Ще нема облікового запису? <a
+      [routerLink]="[
             '../',
             'sign-up'
-            ]">Створіть його</a>
+            ]"
+      class="text-primary"
+    >Створіть його</a>
     </div>
   </form>
 </div>

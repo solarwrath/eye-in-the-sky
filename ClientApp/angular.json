@@ -28,9 +28,9 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss",
               "node_modules/spinkit/spinkit.min.css",
               "src/bootstrap.min.css",
+              "src/styles.scss"
             ],
             "scripts": [
             ]
