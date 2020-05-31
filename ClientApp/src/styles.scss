@@ -8,14 +8,6 @@
   height: 82px;
 }
 
-.header-text {
-  font-family: 'Roboto', sans-serif;
-  font-size: 42px;
-  font-weight: 700;
-  margin-bottom: 0.35em;
-  color: #ffffff;
-}
-
 a {
   color: #111;
   text-decoration: none;
@@ -28,20 +20,10 @@ a {
   justify-content: flex-start;
 }
 
-.navigation-list {
+ul {
   list-style: none;
-  padding: 0 20px 0 0;
+  padding: 0;
   margin: 0;
-}
-
-.navigation-item > a {
-  display: inline-block;
-  text-align: center;
-  width: 100%;
-}
-
-.navigation-item > a.active {
-  border-bottom-color: #ffcc00;
 }
 
 * {

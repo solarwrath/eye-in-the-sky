@@ -1,18 +1,19 @@
 <div class="flex flex-column">
-  <div class="list-icon-wrapper">
-    <div class="list-icon">
+  <div class="selection-list-icon-wrapper">
+    <div class="selection-list-icon">
       <fa-icon icon="home" size="4x"></fa-icon>
     </div>
   </div>
-  <a (click)="onDeselectCampus()" class="header-text cursor-pointer">Корпус</a>
 
-  <div class="list-selected-item navigation-item">
+  <a (click)="onDeselectCampus()" class="selection-list-title">Корпус</a>
+
+  <div class="selection-list-element selection-list-selected-item">
     <span #selectedCampusTitle></span>
   </div>
 
-  <ng-scrollbar class="navigation-scroll">
-    <ul class="navigation-list">
-      <li *ngFor="let campus of availableForSelectionCampuses|async" class="navigation-item">
+  <ng-scrollbar class="selection-list-scroll">
+    <ul class="selection-list">
+      <li *ngFor="let campus of availableForSelectionCampuses|async" class="selection-list-element">
         <a (click)="onSelectCampus($event, campus)">{{campus.title}}</a>
       </li>
     </ul>

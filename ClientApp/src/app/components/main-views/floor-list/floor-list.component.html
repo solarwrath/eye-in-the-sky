@@ -18,7 +18,7 @@
 
   <ng-scrollbar>
     <ul class="navigation-list">
-      <li *ngFor="let floor of availableForSelectionFloors|async" class="navigation-item">
+      <li *ngFor="let floor of availableForSelectionFloors|async" class="selection-list-element">
         <a (click)="onSelectFloor($event, floor)">{{floor.title}}</a>
       </li>
     </ul>
