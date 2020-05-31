@@ -12,18 +12,23 @@ export class LoginAndSignUpRedirectGuard implements CanActivate {
 
   constructor(
     private store: Store<AppState>,
+    private router: Router,
   ) {
     // Injectables do not work with lifecycle hooks like ngOnInit, services require it so going for constructor subscription
     this.store
-      .select(state => state.auth.loginStatus )
+      .select(state => state.auth.loginStatus)
       .subscribe(updatedAuthStatus => {
         this.isLoggedIn = updatedAuthStatus === LoginStatus.LOGGED_IN;
       });
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    // TODO localStore or session, as app reload on user manually typing address, see:
-    // https://stackoverflow.com/questions/23682511/how-to-store-user-session-in-angularjs
+    // TODO Will replace it to use cookies etc. late
+    if (sessionStorage.getItem('loggedIn') === 'true') {
+      this.router.navigate(['']);
+      return false;
+    }
+
     return !this.isLoggedIn;
   }
 }

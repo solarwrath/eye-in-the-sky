@@ -1,9 +1,7 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {MainComponent} from './components/main-views/main/main.component';
-import {LoginComponent} from './components/auth/login/login.component';
 import {AuthGuard} from './components/auth/auth-guard';
-import {SignUpComponent} from './components/auth/sign-up/sign-up.component';
 import {AuthComponent} from './components/auth/auth.component';
 import {LoginAndSignUpRedirectGuard} from './components/auth/login-and-sign-up-redirect-guard.service';
 

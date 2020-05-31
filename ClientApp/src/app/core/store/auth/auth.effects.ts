@@ -6,7 +6,7 @@ import {Router} from '@angular/router';
 import {AppState} from '../reducers';
 import {Store} from '@ngrx/store';
 import {SignalRClientService} from '../../signalr/signalr-client.service';
-import {loginFailed, loginSucceeded, resetSignUpStatus, signUpFailed, signUpSucceeded} from './auth.actions';
+import {loginFailed, loginSucceeded, signUpFailed, signUpSucceeded} from './auth.actions';
 import {resetMemorizedLink} from './guard/auth-guard.actions';
 
 @Injectable()
@@ -46,6 +46,14 @@ export class AuthEffects {
             }
           }
         );
+    })
+  );
+
+  @Effect({dispatch: false})
+  handleLoginSuccessful = this.actions.pipe(
+    ofType(AuthActions.loginSucceeded),
+    tap(() => {
+      sessionStorage.setItem('loggedIn', 'true');
     })
   );
 

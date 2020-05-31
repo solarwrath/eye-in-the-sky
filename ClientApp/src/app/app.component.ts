@@ -8,6 +8,7 @@ import {addRoom} from './core/store/room/room.actions';
 import {addPC} from './core/store/pc/pc.actions';
 import {RouterOutlet} from '@angular/router';
 import {animate, animateChild, group, query, style, transition, trigger} from '@angular/animations';
+import {loginSucceeded} from './core/store/auth/auth.actions';
 
 @Component({
   selector: 'app-root',
@@ -38,6 +39,10 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (sessionStorage.getItem('loggedIn') === 'true') {
+      this.store.dispatch(loginSucceeded());
+    }
+
     this.store.dispatch(addCampus({
       campus: new Campus(
         1, 'Перший'
@@ -131,9 +136,5 @@ export class AppComponent implements OnInit {
         }
       })
     );
-  }
-
-  prepareRoute(outlet: RouterOutlet) {
-    return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation'];
   }
 }
