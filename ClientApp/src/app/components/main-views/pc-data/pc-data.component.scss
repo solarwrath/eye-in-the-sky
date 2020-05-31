@@ -22,3 +22,15 @@
   text-overflow: ellipsis;
   overflow: hidden;
 }
+
+:host.healthy {
+  background: #2e7d32;
+}
+
+:host.warning {
+  background: #bc5100;
+}
+
+:host.critical {
+  background: #b71c1c;
+}

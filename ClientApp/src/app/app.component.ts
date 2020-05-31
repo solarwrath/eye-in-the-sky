@@ -6,9 +6,9 @@ import {Campus} from './core/models/campus.model';
 import {addFloor} from './core/store/floor/floor.actions';
 import {addRoom} from './core/store/room/room.actions';
 import {addPC} from './core/store/pc/pc.actions';
-import {RouterOutlet} from '@angular/router';
-import {animate, animateChild, group, query, style, transition, trigger} from '@angular/animations';
+import {animate, query, style, transition, trigger} from '@angular/animations';
 import {loginSucceeded} from './core/store/auth/auth.actions';
+import {GeneralHealthStatus} from './core/models/pc.model';
 
 @Component({
   selector: 'app-root',
@@ -122,7 +122,7 @@ export class AppComponent implements OnInit {
           id: 1,
           roomId: 1,
           pcName: 'pcName',
-          data: 'pcData'
+          generalHealthStatus: GeneralHealthStatus.UNDEFINED,
         }
       })
     );
@@ -132,7 +132,7 @@ export class AppComponent implements OnInit {
         id: 2,
         roomId: 1,
         pcName: 'pcaName',
-        data: 'pcD2ata'
+        generalHealthStatus: GeneralHealthStatus.HEALTHY,
       }
     }));
 
@@ -141,7 +141,7 @@ export class AppComponent implements OnInit {
         id: 3,
         roomId: 1,
         pcName: 'pca2Name',
-        data: 'pcD2ata'
+        generalHealthStatus: GeneralHealthStatus.WARNING,
       }
     }));
 
@@ -150,7 +150,7 @@ export class AppComponent implements OnInit {
           id: 4,
           roomId: 1,
           pcName: 'pcaNdsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssame',
-          data: 'pcD2ata'
+          generalHealthStatus: GeneralHealthStatus.CRITICAL,
         }
       })
     );
@@ -159,7 +159,7 @@ export class AppComponent implements OnInit {
           id: 5,
           roomId: 1,
           pcName: 'pcaName',
-          data: 'pcD2ata'
+          generalHealthStatus: GeneralHealthStatus.HEALTHY,
         }
       })
     );
