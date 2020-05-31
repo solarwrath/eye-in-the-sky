@@ -9,6 +9,8 @@ import {Campus} from '../../models/campus.model';
 import {Floor} from '../../models/floor.model';
 import {Room} from '../../models/room.model';
 import {PC} from '../../models/pc.model';
+import {PcDataPopupComponent} from '../../../components/main-views/pc-data/pc-data-popup/pc-data-popup.component';
+import {MatDialog} from '@angular/material/dialog';
 
 @Injectable()
 export class PCEffects {
@@ -22,6 +24,7 @@ export class PCEffects {
     private actions: Actions,
     private router: Router,
     private store: Store<AppState>,
+    private dialog: MatDialog,
   ) {
     // Injectables do not work with lifecycle hooks like ngOnInit, services require it so going for constructor subscription
     this.store
@@ -42,6 +45,10 @@ export class PCEffects {
       .subscribe(newSelectedPC => {
         this.previouslySelectedPC = this.currentlySelectedPC;
         this.currentlySelectedPC = newSelectedPC;
+
+        if (this.currentlySelectedPC !== null && this.currentlySelectedPC !== this.previouslySelectedPC) {
+          this.dialog.open(PcDataPopupComponent);
+        }
       });
   }
 
@@ -74,4 +81,5 @@ export class PCEffects {
       }
     })
   );
+
 }
