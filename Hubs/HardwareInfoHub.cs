@@ -6,11 +6,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.Extensions.Logging;
 
 namespace KURSACH.Hubs
 {
     public class HardwareInfoHub : Hub
     {
+        private readonly ILogger<HardwareInfoHub> _logger;
+        public HardwareInfoHub(ILogger<HardwareInfoHub> logger) {
+            _logger = logger;
+        }
+
         // key => computerName
         Dictionary<string, CollectedData> collectedData = new Dictionary<string, CollectedData>();
         public void OnClientData(CollectedData clientData)
@@ -57,7 +63,8 @@ namespace KURSACH.Hubs
         }
 
         public async Task RegisterClient()
-        {            
+        {
+            //TODO Actually send
             Dictionary<int, double> cpuLoad = new Dictionary<int, double>();
             cpuLoad.Add(1, 0.3);
             cpuLoad.Add(2, 0.2);
@@ -84,6 +91,12 @@ namespace KURSACH.Hubs
         public async Task AddPCData(CollectedData collectedData )
         {
             await Clients.All.SendAsync("addPCData", JsonConvert.SerializeObject(collectedData));
+        }
+
+        public async Task TryRegisterUser(string username, string password) 
+        {
+            _logger.LogError($"Registering user: {username} - {password}");
+            await Clients.All.SendAsync("SignUpResult", true);
         }
     }
 }

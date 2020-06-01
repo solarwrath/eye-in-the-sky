@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import * as signalR from '@microsoft/signalr';
+import {HubConnection} from '@microsoft/signalr';
 import {Store} from '@ngrx/store';
 import {AppState} from '../store/reducers';
-import { insertCampus} from '../store/campus/campus.actions';
+import {insertCampus} from '../store/campus/campus.actions';
 import {getCampusByTitle} from '../store/campus/campus.selectors';
 import {insertFloor} from '../store/floor/floor.actions';
 import {getFloorByTitle} from '../store/floor/floor.selectors';
@@ -11,6 +12,7 @@ import {insertRoom} from '../store/room/room.actions';
 import {getRoomByTitle} from '../store/room/room.selectors';
 import {setPCData} from '../store/pc/pc.actions';
 import {CollectedData} from './collected-data-model';
+import SignUpStatus from '../models/sign-up-status.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -20,22 +22,26 @@ export class SignalRClientService {
 
   private users: Map<string, string>;
   private wholeState: AppState;
+  private signUpStatus: SignUpStatus = SignUpStatus.NO_STATUS;
 
   constructor(
     private store: Store<AppState>,
   ) {
     this.store.subscribe(state => {
       this.wholeState = state;
+      this.signUpStatus = state.auth.signUpStatus;
     });
 
     this.users = new Map<string, string>();
     this.users.set('admin', 'test');
   }
 
-  public startConnection(): void {
-    const connection = new signalR.HubConnectionBuilder().withUrl(SignalRClientService.HUB_URL).build();
+  connection: HubConnection;
 
-    connection.on('addPCData', (collectedDataJSON: string) => {
+  public startConnection(): void {
+    this.connection = new signalR.HubConnectionBuilder().withUrl(SignalRClientService.HUB_URL).build();
+
+    this.connection.on('addPCData', (collectedDataJSON: string) => {
       const collectedData: CollectedData = JSON.parse(collectedDataJSON);
 
       const campusTitle = collectedData.ClientInfo.Campus;
@@ -61,9 +67,9 @@ export class SignalRClientService {
       }));
     });
 
-    connection.start()
+    this.connection.start()
       .then(() => {
-        connection.send('RegisterClient');
+        this.connection.send('RegisterClient');
       })
       .catch(err => console.log(err));
   }
@@ -81,14 +87,16 @@ export class SignalRClientService {
   }
 
   public signUp(username: string, password: string): Observable<boolean> {
-    // TODO ACTUAL CODE
-    console.log(`signing up for: ${username}: ${password}`);
+    this.connection.send('TryRegisterUser', username, password);
+
+    console.log(`signing up2 for: ${username}: ${password}`);
     return new Observable<boolean>((obs) => {
-      setTimeout(() => {
-        this.users.set(username, password);
-        obs.next(true);
+      this.connection.on('SignUpResult', (signUpResult) => {
+        console.log(signUpResult);
+        this.connection.off('SignUpResult');
+        obs.next(signUpResult);
         obs.complete();
-      }, 2500);
+      });
     });
   }
 }
