@@ -1,8 +1,7 @@
 export interface PC {
   id: number;
   roomId: number;
-  pcName: string;
-  generalHealthStatus: GeneralHealthStatus;
+  data: PCData;
 }
 
 export enum GeneralHealthStatus {
@@ -10,4 +9,9 @@ export enum GeneralHealthStatus {
   HEALTHY = 'HEALTHY',
   WARNING = 'WARNING',
   CRITICAL = 'CRITICAL',
+}
+
+export interface PCData {
+  pcName: string;
+  generalHealthStatus: GeneralHealthStatus;
 }

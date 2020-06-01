@@ -121,8 +121,10 @@ export class AppComponent implements OnInit {
         pc: {
           id: 1,
           roomId: 1,
-          pcName: 'pcName',
-          generalHealthStatus: GeneralHealthStatus.UNDEFINED,
+          data: {
+            pcName: 'pcName',
+            generalHealthStatus: GeneralHealthStatus.UNDEFINED,
+          }
         }
       })
     );
@@ -131,8 +133,10 @@ export class AppComponent implements OnInit {
       pc: {
         id: 2,
         roomId: 1,
-        pcName: 'pcaName',
-        generalHealthStatus: GeneralHealthStatus.HEALTHY,
+        data: {
+          pcName: 'pcaName',
+          generalHealthStatus: GeneralHealthStatus.HEALTHY,
+        }
       }
     }));
 
@@ -140,8 +144,10 @@ export class AppComponent implements OnInit {
       pc: {
         id: 3,
         roomId: 1,
-        pcName: 'pca2Name',
-        generalHealthStatus: GeneralHealthStatus.WARNING,
+        data: {
+          pcName: 'pca2Name',
+          generalHealthStatus: GeneralHealthStatus.WARNING,
+        }
       }
     }));
 
@@ -149,8 +155,10 @@ export class AppComponent implements OnInit {
         pc: {
           id: 4,
           roomId: 1,
-          pcName: 'pcaNdsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssame',
-          generalHealthStatus: GeneralHealthStatus.CRITICAL,
+          data: {
+            pcName: 'pcaNdsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssame',
+            generalHealthStatus: GeneralHealthStatus.CRITICAL,
+          }
         }
       })
     );
@@ -158,8 +166,10 @@ export class AppComponent implements OnInit {
         pc: {
           id: 5,
           roomId: 1,
-          pcName: 'pcaName',
-          generalHealthStatus: GeneralHealthStatus.HEALTHY,
+          data: {
+            pcName: 'pcaName',
+            generalHealthStatus: GeneralHealthStatus.HEALTHY,
+          },
         }
       })
     );

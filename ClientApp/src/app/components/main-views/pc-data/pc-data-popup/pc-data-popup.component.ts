@@ -19,6 +19,9 @@ export class PcDataPopupComponent implements OnInit {
   ngOnInit(): void {
     this.store
       .select(state => state.pc.selectedPC)
-      .subscribe(newSelectedPC => this.selectedPc = newSelectedPC);
+      .subscribe(newSelectedPC => {
+        this.selectedPc = newSelectedPC;
+        console.log(this.selectedPc);
+      });
   }
 }

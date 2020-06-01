@@ -57,7 +57,7 @@ export class PCEffects {
     ofType(PCActions.selectPC),
     tap((action) => {
       if (this.previouslySelectedPC !== action.pc) {
-        this.router.navigate([`/${this.selectedCampus.title}/${this.selectedFloor.title}/${this.selectedRoom.title}/${action.pc.pcName}`]);
+        this.router.navigate([`/${this.selectedCampus.title}/${this.selectedFloor.title}/${this.selectedRoom.title}/${action.pc.data.pcName}`]);
       }
     })
   );
@@ -66,7 +66,7 @@ export class PCEffects {
   navigateOnPCSelectionByTitle = this.actions.pipe(
     ofType(PCActions.selectPCByName),
     tap((action) => {
-      if (this.previouslySelectedPC.pcName !== action.pcName) {
+      if (this.previouslySelectedPC.data.pcName !== action.pcName) {
         this.router.navigate([`/${this.selectedCampus.title}/${this.selectedFloor.title}/${this.selectedRoom.title}/${action.pcName}`]);
       }
     })
