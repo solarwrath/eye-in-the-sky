@@ -33,6 +33,23 @@ export const _pcReducer = createReducer(
       ...state,
     };
   }),
+  on(PCActions.updatePCData, (state, {clientName, data}) => {
+    const copiedPCs = [...state.pcs];
+
+    const foundPCIndex = copiedPCs.findIndex(pc => pc.data.clientName === clientName);
+    if (foundPCIndex !== -1) {
+      const editedPC = {
+        ...copiedPCs[foundPCIndex]
+      };
+      editedPC.data = data;
+      copiedPCs.splice(foundPCIndex, 1, editedPC);
+    }
+
+    return {
+      ...state,
+      pcs: copiedPCs,
+    };
+  }),
   on(PCActions.addPC, (state, {pc}) => {
     return {
       ...state,
@@ -49,6 +66,12 @@ export const _pcReducer = createReducer(
     return {
       ...state,
       selectedPC: state.pcs.find(pc => pc.data.clientName === clientName),
+    };
+  }),
+  on(PCActions.selectPCById, (state, {id}) => {
+    return {
+      ...state,
+      selectedPC: state.pcs.find(pc => pc.id === id),
     };
   }),
   on(PCActions.deselectPC, (state) => {
@@ -111,7 +134,8 @@ export const _pcReducer = createReducer(
       selectedPC: null,
     };
   }),
-);
+  )
+;
 
 export const getPCsOfRoom = (state: AppState, room: Room): PC[] => {
   return state.pc.pcs.filter(pcData => pcData.roomId === room.id);

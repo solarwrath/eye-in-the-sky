@@ -9,6 +9,9 @@ import {Campus} from '../../models/campus.model';
 import {Floor} from '../../models/floor.model';
 import {Room} from '../../models/room.model';
 import {PC} from '../../models/pc.model';
+import {PcDataPopupComponent} from '../../../components/main-views/pc-data/pc-data-popup/pc-data-popup.component';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {deselectPC, selectPCById, selectPCByName} from './pc.actions';
 
 @Injectable()
 export class PCEffects {
@@ -17,11 +20,13 @@ export class PCEffects {
   private selectedRoom: Room | null = null;
   private previouslySelectedPC: PC | null = null;
   private currentlySelectedPC: PC | null = null;
+  private dialogRef: MatDialogRef<PcDataPopupComponent> | null = null;
 
   constructor(
     private actions: Actions,
     private router: Router,
     private store: Store<AppState>,
+    private dialog: MatDialog,
   ) {
     // Injectables do not work with lifecycle hooks like ngOnInit, services require it so going for constructor subscription
     this.store
@@ -42,6 +47,14 @@ export class PCEffects {
       .subscribe(newSelectedPC => {
         this.previouslySelectedPC = this.currentlySelectedPC;
         this.currentlySelectedPC = newSelectedPC;
+
+        if (this.currentlySelectedPC !== null && this.currentlySelectedPC !== this.previouslySelectedPC) {
+          this.dialogRef = this.dialog.open(PcDataPopupComponent);
+
+          this.dialogRef.afterClosed().subscribe(() => {
+            this.store.dispatch(deselectPC());
+          });
+        }
       });
   }
 
@@ -71,6 +84,33 @@ export class PCEffects {
     tap(() => {
       if (this.selectedCampus != null && this.selectedFloor != null && this.selectedRoom != null) {
         this.router.navigate([`/${this.selectedCampus.title}/${this.selectedFloor.title}/${this.selectedRoom.title}`]);
+      }
+    })
+  );
+
+  @Effect({dispatch: false})
+  changePopupDataOnSetPCData = this.actions.pipe(
+    ofType(PCActions.setPCData),
+    tap((action) => {
+      if (this.currentlySelectedPC != null && this.currentlySelectedPC.data.clientName === action.data.clientName) {
+        if (this.dialogRef !== null) {
+          this.dialogRef.close();
+        }
+        this.store.dispatch(selectPCByName({clientName: action.data.clientName}));
+      }
+    })
+  );
+
+  @Effect({dispatch: false})
+  changePopupDataOnUpdate = this.actions.pipe(
+    ofType(PCActions.updatePCData),
+    tap((action) => {
+      if (this.currentlySelectedPC != null && this.currentlySelectedPC.data.clientName === action.data.clientName) {
+        if (this.dialogRef !== null) {
+          this.dialogRef.close();
+        }
+
+        this.store.dispatch(selectPCByName({clientName: action.data.clientName}));
       }
     })
   );

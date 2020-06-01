@@ -27,8 +27,4 @@ export class PcGridComponent implements OnInit {
         this.selectedPC = newSelectedPC;
       });
   }
-
-  public onSelectPC(event: any, pc: PC): void {
-    this.store.dispatch(selectPC({pc}));
-  }
 }

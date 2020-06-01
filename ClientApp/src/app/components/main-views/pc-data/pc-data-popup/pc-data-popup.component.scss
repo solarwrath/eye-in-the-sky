@@ -1,0 +1,10 @@
+.close-button-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.close-button {
+  background-color: var(--primary-color);
+}
