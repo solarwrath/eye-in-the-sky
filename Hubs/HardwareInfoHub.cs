@@ -13,8 +13,13 @@ namespace KURSACH.Hubs
     public class HardwareInfoHub : Hub
     {
         private readonly ILogger<HardwareInfoHub> _logger;
-        public HardwareInfoHub(ILogger<HardwareInfoHub> logger) {
+        private readonly UserService _userService;
+        public HardwareInfoHub(
+            ILogger<HardwareInfoHub> logger,
+            UserService userService
+            ) {
             _logger = logger;
+            _userService = userService;
         }
 
         // key => computerName
@@ -93,10 +98,20 @@ namespace KURSACH.Hubs
             await Clients.All.SendAsync("addPCData", JsonConvert.SerializeObject(collectedData));
         }
 
-        public async Task TryRegisterUser(string username, string password) 
+        public async Task TryRegisterUser(string username, string password)
         {
             _logger.LogError($"Registering user: {username} - {password}");
-            await Clients.All.SendAsync("SignUpResult", true);
+            var signUpResult = await _userService.TrySignUpUserAsync(username, password);
+
+            await Clients.Caller.SendAsync("SignUpResult", signUpResult == null || signUpResult.Count() == 0);
+        }
+
+        public async Task TryLoginUser(string username, string password)
+        {
+            _logger.LogError($"Signing in user: {username} - {password}");
+            var signInResult = await _userService.TryLoginUserAsync(username, password);
+
+            await Clients.Caller.SendAsync("LoginResult", signInResult);
         }
     }
 }

@@ -20,20 +20,14 @@ import SignUpStatus from '../models/sign-up-status.enum';
 export class SignalRClientService {
   private static readonly HUB_URL = '/hardwareInfo';
 
-  private users: Map<string, string>;
   private wholeState: AppState;
-  private signUpStatus: SignUpStatus = SignUpStatus.NO_STATUS;
 
   constructor(
     private store: Store<AppState>,
   ) {
     this.store.subscribe(state => {
       this.wholeState = state;
-      this.signUpStatus = state.auth.signUpStatus;
     });
-
-    this.users = new Map<string, string>();
-    this.users.set('admin', 'test');
   }
 
   connection: HubConnection;
@@ -75,24 +69,22 @@ export class SignalRClientService {
   }
 
   public checkIdentity(username: string, password: string): Observable<boolean> {
-    // TODO ACTUAL CODE
-    console.log(`checking for: ${username}: ${password}`);
+    this.connection.send('TryLoginUser', username, password);
+
     return new Observable<boolean>((obs) => {
-      setTimeout(() => {
-        const userPassword = this.users.get(username);
-        obs.next(userPassword !== undefined && userPassword === password);
+      this.connection.on('LoginResult', (signInResult) => {
+        this.connection.off('LoginResult');
+        obs.next(signInResult);
         obs.complete();
-      }, 2500);
+      });
     });
   }
 
   public signUp(username: string, password: string): Observable<boolean> {
     this.connection.send('TryRegisterUser', username, password);
 
-    console.log(`signing up2 for: ${username}: ${password}`);
     return new Observable<boolean>((obs) => {
       this.connection.on('SignUpResult', (signUpResult) => {
-        console.log(signUpResult);
         this.connection.off('SignUpResult');
         obs.next(signUpResult);
         obs.complete();
