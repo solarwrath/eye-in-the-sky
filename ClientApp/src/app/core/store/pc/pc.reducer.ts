@@ -26,10 +26,10 @@ export const _pcReducer = createReducer(
       pcs: [...state.pcs, pc],
     };
   }),
-  on(PCActions.updatePCData, (state, {clientName, newData}) => {
+  on(PCActions.updatePCData, (state, {id, newData}) => {
     const copiedPCs = [...state.pcs];
 
-    const foundPCIndex = copiedPCs.findIndex(pc => pc.data.pcName === clientName);
+    const foundPCIndex = copiedPCs.findIndex(pc => pc.id === id);
     if (foundPCIndex !== -1) {
       const editedPC = {
         ...copiedPCs[foundPCIndex]
@@ -53,6 +53,12 @@ export const _pcReducer = createReducer(
     return {
       ...state,
       selectedPC: state.pcs.find(pc => pc.data.pcName === pcName),
+    };
+  }),
+  on(PCActions.selectPCById, (state, {id}) => {
+    return {
+      ...state,
+      selectedPC: state.pcs.find(pc => pc.id === id),
     };
   }),
   on(PCActions.deselectPC, (state) => {

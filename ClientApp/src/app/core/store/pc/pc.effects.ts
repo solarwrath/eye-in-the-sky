@@ -10,7 +10,8 @@ import {Floor} from '../../models/floor.model';
 import {Room} from '../../models/room.model';
 import {PC} from '../../models/pc.model';
 import {PcDataPopupComponent} from '../../../components/main-views/pc-data/pc-data-popup/pc-data-popup.component';
-import {MatDialog} from '@angular/material/dialog';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {deselectPC, selectPC, selectPCById, selectPCByName} from './pc.actions';
 
 @Injectable()
 export class PCEffects {
@@ -19,6 +20,7 @@ export class PCEffects {
   private selectedRoom: Room | null = null;
   private previouslySelectedPC: PC | null = null;
   private currentlySelectedPC: PC | null = null;
+  private dialogRef: MatDialogRef<PcDataPopupComponent> | null = null;
 
   constructor(
     private actions: Actions,
@@ -47,7 +49,11 @@ export class PCEffects {
         this.currentlySelectedPC = newSelectedPC;
 
         if (this.currentlySelectedPC !== null && this.currentlySelectedPC !== this.previouslySelectedPC) {
-          this.dialog.open(PcDataPopupComponent);
+          this.dialogRef = this.dialog.open(PcDataPopupComponent);
+
+          this.dialogRef.afterClosed().subscribe(() => {
+            this.store.dispatch(deselectPC());
+          });
         }
       });
   }
@@ -78,6 +84,19 @@ export class PCEffects {
     tap(() => {
       if (this.selectedCampus != null && this.selectedFloor != null && this.selectedRoom != null) {
         this.router.navigate([`/${this.selectedCampus.title}/${this.selectedFloor.title}/${this.selectedRoom.title}`]);
+      }
+    })
+  );
+
+  @Effect({dispatch: false})
+  changePopupDataOnUpdate = this.actions.pipe(
+    ofType(PCActions.updatePCData),
+    tap((action) => {
+      if (this.currentlySelectedPC != null && this.currentlySelectedPC.id === action.id) {
+        if (this.dialogRef !== null) {
+          this.dialogRef.close();
+        }
+        this.store.dispatch(selectPCById({id: action.id}));
       }
     })
   );

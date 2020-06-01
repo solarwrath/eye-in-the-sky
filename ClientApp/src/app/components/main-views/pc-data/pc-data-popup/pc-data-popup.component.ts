@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ComponentRef, OnInit} from '@angular/core';
 import {AppState} from '../../../../core/store/reducers';
 import {Store} from '@ngrx/store';
 import {PC} from '../../../../core/models/pc.model';
@@ -12,7 +12,7 @@ export class PcDataPopupComponent implements OnInit {
   public selectedPc: PC | null = null;
 
   constructor(
-    private store: Store<AppState>
+    private store: Store<AppState>,
   ) {
   }
 
@@ -21,7 +21,6 @@ export class PcDataPopupComponent implements OnInit {
       .select(state => state.pc.selectedPC)
       .subscribe(newSelectedPC => {
         this.selectedPc = newSelectedPC;
-        console.log(this.selectedPc);
       });
   }
 }

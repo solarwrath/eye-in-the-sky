@@ -176,7 +176,7 @@ export class AppComponent implements OnInit {
 
     setTimeout(() => {
       this.store.dispatch(updatePCData({
-        clientName: 'pcaNdsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssame',
+        id: 4,
         newData: {
           pcName: 'zulul',
           generalHealthStatus: GeneralHealthStatus.WARNING,
