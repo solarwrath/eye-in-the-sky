@@ -4,8 +4,8 @@ import {Store} from '@ngrx/store';
 import {AppState} from '../../../core/store/reducers';
 import {Floor} from '../../../core/models/floor.model';
 import {Observable} from 'rxjs';
-import {getFloorsOfSelectedCampus} from '../../../core/store/floor/floor.reducer';
 import {deselectFloor, selectFloor} from '../../../core/store/floor/floor.actions';
+import {getFloorsOfSelectedCampus} from '../../../core/store/floor/floor.selectors';
 
 @Component({
   selector: 'app-floor-list',

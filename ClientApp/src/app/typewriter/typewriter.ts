@@ -1,3 +1,5 @@
+import Timeout = NodeJS.Timeout;
+
 export default class Typewriter {
   private target: HTMLElement;
   private currentText: string;
@@ -6,8 +8,8 @@ export default class Typewriter {
 
   private isDeleting = false;
 
-  private utilitySubscriptions: number[] = [];
-  private workerSubscriptions: number[] = [];
+  private utilitySubscriptions: Timeout[] = [];
+  private workerSubscriptions: Timeout[] = [];
   private lampartCounter = 0;
 
   constructor(

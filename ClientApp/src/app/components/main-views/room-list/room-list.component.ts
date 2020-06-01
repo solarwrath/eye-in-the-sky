@@ -3,9 +3,9 @@ import {Observable} from 'rxjs';
 import Typewriter from '../../../typewriter/typewriter';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../../core/store/reducers';
-import {getRoomsOfSelectedFloor} from '../../../core/store/room/room.reducer';
 import {Room} from '../../../core/models/room.model';
 import {deselectRoom, selectRoom} from '../../../core/store/room/room.actions';
+import {getRoomsOfSelectedFloor} from '../../../core/store/room/room.selectors';
 
 @Component({
   selector: 'app-room-list',

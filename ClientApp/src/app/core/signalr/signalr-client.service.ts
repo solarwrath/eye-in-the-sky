@@ -1,15 +1,70 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
+import * as signalR from '@microsoft/signalr';
+import {CollectedData} from './collected-data-model';
+import {Store} from '@ngrx/store';
+import {AppState} from '../store/reducers';
+import {addCampus, insertCampus} from '../store/campus/campus.actions';
+import {getCampusByTitle} from '../store/campus/campus.selectors';
+import {insertFloor} from '../store/floor/floor.actions';
+import {getFloorByTitle} from '../store/floor/floor.selectors';
+import {insertRoom} from '../store/room/room.actions';
+import {getRoomByTitle} from '../store/room/room.selectors';
+import {setPCData} from '../store/pc/pc.actions';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SignalRClientService {
-  private users: Map<string, string>;
+  private static readonly HUB_URL = '/hardwareInfo';
 
-  constructor() {
+  private users: Map<string, string>;
+  private wholeState: AppState;
+
+  constructor(
+    private store: Store<AppState>,
+  ) {
+    this.store.subscribe(state => {
+      this.wholeState = state;
+    });
+
     this.users = new Map<string, string>();
     this.users.set('admin', 'test');
+  }
+
+  public startConnection(): void {
+    const connection = new signalR.HubConnectionBuilder().withUrl(SignalRClientService.HUB_URL).build();
+
+    connection.on('logMessage', (message) => console.log(message));
+    connection.on('addPCData', (collectedData: CollectedData) => {
+      const campusTitle = collectedData.ClientInfo.HardwareInfo.Campus;
+      this.store.dispatch(insertCampus({campusTitle}));
+
+      const campusWithSuchTitle = getCampusByTitle(this.wholeState, campusTitle);
+      const floorTitle = collectedData.ClientInfo.HardwareInfo.Floor;
+      this.store.dispatch(insertFloor({floorTitle, campusId: campusWithSuchTitle.id}));
+
+      const floorWithSuchTitle = getFloorByTitle(this.wholeState, floorTitle);
+      const roomTitle = collectedData.ClientInfo.HardwareInfo.Room;
+      this.store.dispatch(insertRoom({roomTitle, floorId: floorWithSuchTitle.id}));
+
+      const roomWithSuchTitle = getRoomByTitle(this.wholeState, roomTitle);
+      this.store.dispatch(setPCData({
+        roomId: roomWithSuchTitle.id,
+        data: {
+          averageCPULoad: collectedData.ClientInfo.HardwareInfo.averageCPULoad,
+          cpuLoad: collectedData.ClientInfo.HardwareInfo.cpuLoad,
+          clientName: collectedData.ClientInfo.HardwareInfo.ClientName,
+          timeStamp: collectedData.DateTime
+        }
+      }));
+    });
+
+    connection.start()
+      .then(() => {
+        connection.send('RegisterClient');
+      })
+      .catch(err => console.log(err));
   }
 
   public checkIdentity(username: string, password: string): Observable<boolean> {

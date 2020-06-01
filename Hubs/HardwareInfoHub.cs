@@ -55,5 +55,37 @@ namespace KURSACH.Hubs
             analyser.CheckAllProblems(collectedData.ClientInfo.HardwareInfo);
             return Clients.All.SendAsync("test", json);
         }
+
+        public async Task RegisterClient()
+        {
+           await Clients.Caller.SendAsync("logMessage", "yupppp");
+
+            Dictionary<int, double> cpuLoad = new Dictionary<int, double>();
+            cpuLoad.Add(1, 0.3);
+            cpuLoad.Add(2, 0.2);
+
+            await Clients.Caller.SendAsync("addPCData", JsonConvert.SerializeObject(new CollectedData
+            {
+                ClientInfo = new ClientInfo
+                {
+                    Campus = 1,
+                    Floor = 2,
+                    Room = 3,
+                    ClientName = "Desktop-12345",
+                    HardwareInfo = new HardwareInfo
+                    {
+                        cpuLoad = cpuLoad,
+                        averageCPULoad = 0.25,
+                        memoryLoad = 0.75,
+                    }
+                },
+                DateTime = DateTime.Now
+            }));
+        }
+
+        public async Task AddPCData(CollectedData collectedData )
+        {
+            await Clients.All.SendAsync("addPCData", JsonConvert.SerializeObject(collectedData));
+        }
     }
 }

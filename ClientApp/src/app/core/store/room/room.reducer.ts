@@ -19,6 +19,19 @@ const initialState: RoomState = {
 // tslint:disable-next-line:variable-name
 export const _roomReducer = createReducer(
   initialState,
+  on(RoomActions.insertRoom, (state, {roomTitle, floorId}) => {
+    const roomWithSuchTitle = state.rooms.find((room: Room) => room.title === roomTitle);
+    if (!roomWithSuchTitle) {
+      return {
+        ...state,
+        rooms: [...state.rooms, new Room(roomTitle, floorId)],
+      };
+    }
+
+    return {
+      ...state,
+    };
+  }),
   on(RoomActions.addRoom, (state, {room}) => {
     return {
       ...state,
@@ -80,18 +93,6 @@ export const _roomReducer = createReducer(
     };
   }),
 );
-
-export const getRoomsOfFloor = (state: AppState, floor: Floor): Room[] => {
-  return state.room.rooms.filter(room => room.floorId === floor.id);
-};
-
-export const getRoomsOfSelectedFloor = (state: AppState): Room[] | null => {
-  if (state.floor.selectedFloor != null) {
-    return getRoomsOfFloor(state, state.floor.selectedFloor);
-  }
-
-  return null;
-};
 
 export function roomReducer(state: RoomState | undefined, action: Action) {
   return _roomReducer(state, action);

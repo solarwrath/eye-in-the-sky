@@ -9,6 +9,7 @@ import {addPC} from './core/store/pc/pc.actions';
 import {RouterOutlet} from '@angular/router';
 import {animate, animateChild, group, query, style, transition, trigger} from '@angular/animations';
 import {loginSucceeded} from './core/store/auth/auth.actions';
+import {SignalRClientService} from './core/signalr/signalr-client.service';
 
 @Component({
   selector: 'app-root',
@@ -35,14 +36,19 @@ import {loginSucceeded} from './core/store/auth/auth.actions';
   ]
 })
 export class AppComponent implements OnInit {
-  constructor(private store: Store<AppState>) {
+  constructor(
+    private store: Store<AppState>,
+    private signalRClient: SignalRClientService,
+  ) {
   }
 
   ngOnInit(): void {
+    this.signalRClient.startConnection();
+
     if (sessionStorage.getItem('loggedIn') === 'true') {
       this.store.dispatch(loginSucceeded());
     }
-
+/*
     this.store.dispatch(addCampus({
       campus: new Campus(
         1, 'Перший'
@@ -135,6 +141,6 @@ export class AppComponent implements OnInit {
           data: 'pcD2ata'
         }
       })
-    );
+    );*/
   }
 }

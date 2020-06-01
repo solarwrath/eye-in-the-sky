@@ -20,6 +20,19 @@ const initialState: PCState = {
 // tslint:disable-next-line:variable-name
 export const _pcReducer = createReducer(
   initialState,
+  on(PCActions.setPCData, (state, {data, roomId}) => {
+    const pcWithSuchClientName = state.pcs.find((pc: PC) => pc.data.clientName === data.clientName);
+    if (!pcWithSuchClientName) {
+      return {
+        ...state,
+        pcs: [...state.pcs, new PC(data, roomId)],
+      };
+    }
+
+    return {
+      ...state,
+    };
+  }),
   on(PCActions.addPC, (state, {pc}) => {
     return {
       ...state,
@@ -32,10 +45,10 @@ export const _pcReducer = createReducer(
       selectedPC: pc,
     };
   }),
-  on(PCActions.selectPCByName, (state, {pcName}) => {
+  on(PCActions.selectPCByName, (state, {clientName}) => {
     return {
       ...state,
-      selectedPC: state.pcs.find(pc => pc.pcName === pcName),
+      selectedPC: state.pcs.find(pc => pc.data.clientName === clientName),
     };
   }),
   on(PCActions.deselectPC, (state) => {
