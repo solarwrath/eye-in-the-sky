@@ -10,7 +10,7 @@ namespace KURSACH.DataAnalysers
     {
         public override void Analyse(HardwareInfo hardwareInfo, List<ClientProblems> problems)
         {
-            if (hardwareInfo.averageCPULoad > 70)
+            if (hardwareInfo.AverageCPULoad > 70)
                 problems.Add(ClientProblems.CPU_PROBLEM);
         }
     }

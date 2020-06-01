@@ -3,14 +3,16 @@ using System;
 using KURSACH.DataContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace KURSACH.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20200601083750_DataRecords")]
+    partial class DataRecords
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -20,28 +22,22 @@ namespace KURSACH.Migrations
             modelBuilder.Entity("KURSACH.Models.UserData.DataRecord", b =>
                 {
                     b.Property<string>("ClientName")
-                        .HasColumnType("varchar(50) CHARACTER SET utf8mb4")
-                        .HasMaxLength(50);
+                        .HasColumnType("varchar(80) CHARACTER SET utf8mb4");
 
                     b.Property<string>("Campus")
-                        .HasColumnType("varchar(30) CHARACTER SET utf8mb4")
-                        .HasMaxLength(30);
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("Floor")
-                        .HasColumnType("varchar(20) CHARACTER SET utf8mb4")
-                        .HasMaxLength(20);
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("HardwareInfo")
-                        .HasColumnType("varchar(250) CHARACTER SET utf8mb4")
-                        .HasMaxLength(250);
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<int>("HealthStatus")
-                        .HasColumnType("int")
-                        .HasMaxLength(20);
+                        .HasColumnType("int");
 
                     b.Property<string>("Room")
-                        .HasColumnType("varchar(20) CHARACTER SET utf8mb4")
-                        .HasMaxLength(20);
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<DateTime>("Timestamp")
                         .HasColumnType("datetime(6)");

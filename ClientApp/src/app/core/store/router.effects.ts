@@ -92,7 +92,7 @@ export class RouterEffects {
                         const encodedPCName = action.payload.routerState.root.firstChild.params.pc;
                         if (encodedPCName) {
                           const decodedPCName = decodeURI(encodedPCName);
-                          const pcFromURI: PC | null = this.pcs.find(pc => pc.data.clientName === decodedPCName);
+                          const pcFromURI: PC | null = this.pcs.find(pc => pc.data.ClientName === decodedPCName);
 
                           if (pcFromURI && pcFromURI !== this.selectedPC) {
                             this.store.dispatch(selectPC({pc: pcFromURI}));

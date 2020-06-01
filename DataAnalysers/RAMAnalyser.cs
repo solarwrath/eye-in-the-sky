@@ -10,7 +10,7 @@ namespace KURSACH.DataAnalysers
     {
         public override void Analyse(HardwareInfo hardwareInfo, List<ClientProblems> problems)
         {
-            if (hardwareInfo.memoryLoad > 90)
+            if (hardwareInfo.MemoryLoad > 90)
                 problems.Add(ClientProblems.RAM_PROBLEM);
         }
     }

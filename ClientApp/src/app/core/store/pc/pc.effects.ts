@@ -11,7 +11,7 @@ import {Room} from '../../models/room.model';
 import {PC} from '../../models/pc.model';
 import {PcDataPopupComponent} from '../../../components/main-views/pc-data/pc-data-popup/pc-data-popup.component';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {deselectPC, selectPCById, selectPCByName} from './pc.actions';
+import {deselectPC, selectPCByName} from './pc.actions';
 
 @Injectable()
 export class PCEffects {
@@ -63,7 +63,7 @@ export class PCEffects {
     ofType(PCActions.selectPC),
     tap((action) => {
       if (this.previouslySelectedPC !== action.pc) {
-        this.router.navigate([`/${this.selectedCampus.title}/${this.selectedFloor.title}/${this.selectedRoom.title}/${action.pc.data.clientName}`]);
+        this.router.navigate([`/${this.selectedCampus.title}/${this.selectedFloor.title}/${this.selectedRoom.title}/${action.pc.data.ClientName}`]);
       }
     })
   );
@@ -72,7 +72,7 @@ export class PCEffects {
   navigateOnPCSelectionByTitle = this.actions.pipe(
     ofType(PCActions.selectPCByName),
     tap((action) => {
-      if (this.previouslySelectedPC.data.clientName !== action.clientName) {
+      if (this.previouslySelectedPC.data.ClientName !== action.clientName) {
         this.router.navigate([`/${this.selectedCampus.title}/${this.selectedFloor.title}/${this.selectedRoom.title}/${action.clientName}`]);
       }
     })
@@ -92,11 +92,11 @@ export class PCEffects {
   changePopupDataOnSetPCData = this.actions.pipe(
     ofType(PCActions.setPCData),
     tap((action) => {
-      if (this.currentlySelectedPC != null && this.currentlySelectedPC.data.clientName === action.data.clientName) {
+      if (this.currentlySelectedPC != null && this.currentlySelectedPC.data.ClientName === action.data.ClientName) {
         if (this.dialogRef !== null) {
           this.dialogRef.close();
         }
-        this.store.dispatch(selectPCByName({clientName: action.data.clientName}));
+        this.store.dispatch(selectPCByName({clientName: action.data.ClientName}));
       }
     })
   );
@@ -105,12 +105,12 @@ export class PCEffects {
   changePopupDataOnUpdate = this.actions.pipe(
     ofType(PCActions.updatePCData),
     tap((action) => {
-      if (this.currentlySelectedPC != null && this.currentlySelectedPC.data.clientName === action.data.clientName) {
+      if (this.currentlySelectedPC != null && this.currentlySelectedPC.data.ClientName === action.data.ClientName) {
         if (this.dialogRef !== null) {
           this.dialogRef.close();
         }
 
-        this.store.dispatch(selectPCByName({clientName: action.data.clientName}));
+        this.store.dispatch(selectPCByName({clientName: action.data.ClientName}));
       }
     })
   );

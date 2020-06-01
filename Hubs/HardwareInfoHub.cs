@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
+using KURSACH.DataContext;
 
 namespace KURSACH.Hubs
 {
@@ -14,93 +15,90 @@ namespace KURSACH.Hubs
     {
         private readonly ILogger<HardwareInfoHub> _logger;
         private readonly UserService _userService;
+        private readonly ApplicationContext _applicationContext;
+           
         public HardwareInfoHub(
             ILogger<HardwareInfoHub> logger,
-            UserService userService
+            UserService userService,
+            ApplicationContext applicationContext
             ) {
             _logger = logger;
             _userService = userService;
-        }
-
-        // key => computerName
-        Dictionary<string, CollectedData> collectedData = new Dictionary<string, CollectedData>();
-        public void OnClientData(CollectedData clientData)
-        {
-            string clientName = clientData.ClientInfo.ClientName;
-
-            collectedData[clientName] = clientData;
-
-            HealthAnalyser healthAnalyser = new HealthAnalyser();
-            healthAnalyser.CheckAllProblems(clientData.ClientInfo.HardwareInfo);
-            healthAnalyser.AnalyseGeneralStatus();
-        }
-        public void GetJsonData(string jsonData)
-        {
-            CollectedData collectedData = JsonConvert.DeserializeObject<CollectedData>(jsonData);
-            this.OnClientData(collectedData);
-        }
-
-        /*public ClientHealthCheckResults AnalyzeClientData(CollectedData collectedData)
-        {
-            return new ClientHealthCheckResults(collectedData.ClientInfo.HardwareInfo);
-        }*/
-
-        /*public Task Result(string hoba)
-        {
-            CollectedData collectedData = JsonConvert.DeserializeObject<CollectedData>(hoba);
-            return Clients.All.SendAsync("result", AnalyzeClientData(collectedData).GetGeneralStatus().ToString());
-        }*/
-        /*
-        public async void GetComputersInfo(string group)
-        {
-            await Clients.Group(group).SendAsync("getComputerInfo");
-        }
-        public Task JoinGroup(string group)
-        {
-            return Groups.AddToGroupAsync(Context.ConnectionId, group);
-        }*/
-        public Task test(string json)
-        {
-            CollectedData collectedData = JsonConvert.DeserializeObject<CollectedData>(json);
-            HealthAnalyser analyser = new HealthAnalyser();
-            analyser.CheckAllProblems(collectedData.ClientInfo.HardwareInfo);
-            return Clients.All.SendAsync("test", json);
+            _applicationContext = applicationContext;
         }
 
         public async Task RegisterClient()
         {
-            //TODO Actually send
-            Dictionary<int, double> cpuLoad = new Dictionary<int, double>();
-            cpuLoad.Add(1, 0.3);
-            cpuLoad.Add(2, 0.2);
+            var serializedDataRecords =
+                _applicationContext.DataRecords.Select(dataRecord => JsonConvert.SerializeObject(dataRecord));
+                       
+            await Clients.Caller.SendAsync("addDataRecords", JsonConvert.SerializeObject(serializedDataRecords));
 
-            await Clients.Caller.SendAsync("addPCData", JsonConvert.SerializeObject(new CollectedData
+            await Task.Delay(5000).ContinueWith(async (t) =>
             {
-                ClientInfo = new ClientInfo
+                Dictionary<int, double> cpuLoad = new Dictionary<int, double>();
+                cpuLoad.Add(1, 0.3);
+                cpuLoad.Add(2, 0.2);
+                
+                await this.OnDataReceived(new CollectedData
                 {
-                    Campus = "Головний",
-                    Floor = "Перший",
-                    Room = "Хз",
-                    ClientName = "Desktop-12345",
-                    HardwareInfo = new HardwareInfo
+                    ClientInfo = new ClientInfo
                     {
-                        cpuLoad = cpuLoad,
-                        averageCPULoad = 0.25,
-                        memoryLoad = 0.75,
-                    }
-                },
-                DateTime = DateTime.Now
-            }));
+                        Campus = "Головний",
+                        Floor = "Перший",
+                        Room = "Хз",
+                        ClientName = "Desktop-12345",
+                        HardwareInfo = new HardwareInfo
+                        {
+                            CPULoad = cpuLoad,
+                            AverageCPULoad = 0.25,
+                            MemoryLoad = 0.75,
+                        }
+                    },
+                    DateTime = DateTime.Now
+                });
+            });
         }
 
-        public async Task AddPCData(CollectedData collectedData )
-        {
-            await Clients.All.SendAsync("addPCData", JsonConvert.SerializeObject(collectedData));
+        public async Task OnDataReceived(CollectedData collectedData) {
+            _logger.LogError("Got information", collectedData);
+            HealthAnalyser healthAnalyser = new HealthAnalyser();
+            healthAnalyser.CheckAllProblems(collectedData.ClientInfo.HardwareInfo);
+            healthAnalyser.AnalyseGeneralStatus();
+
+            DataRecord dataRecord = new DataRecord
+            {
+                Timestamp = collectedData.DateTime,
+                ClientName = collectedData.ClientInfo.ClientName,
+                Campus = collectedData.ClientInfo.Campus,
+                Room = collectedData.ClientInfo.Room,
+                HardwareInfo = collectedData.ClientInfo.HardwareInfo,
+                HealthStatus = healthAnalyser.HealthStatus,
+            };
+
+            _logger.LogError(JsonConvert.SerializeObject(dataRecord));
+
+            var persistedDataRecord = _applicationContext.DataRecords
+                .FirstOrDefault(persistedDataRecord => persistedDataRecord.ClientName == dataRecord.ClientName);
+            _logger.LogError(JsonConvert.SerializeObject(persistedDataRecord));
+
+            if (persistedDataRecord != null)
+            {
+                _applicationContext.Entry(persistedDataRecord).CurrentValues.SetValues(dataRecord);
+            }
+            else
+            {
+                await _applicationContext.AddAsync(dataRecord);
+            }
+
+            await _applicationContext.SaveChangesAsync();
+            _logger.LogError("we saved");
+
+            await Clients.All.SendAsync("addDataRecord", JsonConvert.SerializeObject(dataRecord));
         }
 
         public async Task TryRegisterUser(string username, string password)
         {
-            _logger.LogError($"Registering user: {username} - {password}");
             var signUpResult = await _userService.TrySignUpUserAsync(username, password);
 
             await Clients.Caller.SendAsync("SignUpResult", signUpResult == null || signUpResult.Count() == 0);
@@ -108,7 +106,6 @@ namespace KURSACH.Hubs
 
         public async Task TryLoginUser(string username, string password)
         {
-            _logger.LogError($"Signing in user: {username} - {password}");
             var signInResult = await _userService.TryLoginUserAsync(username, password);
 
             await Clients.Caller.SendAsync("LoginResult", signInResult);

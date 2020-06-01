@@ -1,11 +1,11 @@
-import {PCData} from './pc-data.model';
+import {DataRecord} from './data-record.model';
 
 export class PC {
   private static nextId = 1;
   public id: number;
 
   constructor(
-    public data: PCData,
+    public data: DataRecord,
     public roomId: number,
   ) {
     this.id = PC.nextId++;

@@ -21,7 +21,7 @@ const initialState: PCState = {
 export const _pcReducer = createReducer(
   initialState,
   on(PCActions.setPCData, (state, {data, roomId}) => {
-    const pcWithSuchClientName = state.pcs.find((pc: PC) => pc.data.clientName === data.clientName);
+    const pcWithSuchClientName = state.pcs.find((pc: PC) => pc.data.ClientName === data.ClientName);
     if (!pcWithSuchClientName) {
       return {
         ...state,
@@ -36,7 +36,7 @@ export const _pcReducer = createReducer(
   on(PCActions.updatePCData, (state, {clientName, data}) => {
     const copiedPCs = [...state.pcs];
 
-    const foundPCIndex = copiedPCs.findIndex(pc => pc.data.clientName === clientName);
+    const foundPCIndex = copiedPCs.findIndex(pc => pc.data.ClientName === clientName);
     if (foundPCIndex !== -1) {
       const editedPC = {
         ...copiedPCs[foundPCIndex]
@@ -65,7 +65,7 @@ export const _pcReducer = createReducer(
   on(PCActions.selectPCByName, (state, {clientName}) => {
     return {
       ...state,
-      selectedPC: state.pcs.find(pc => pc.data.clientName === clientName),
+      selectedPC: state.pcs.find(pc => pc.data.ClientName === clientName),
     };
   }),
   on(PCActions.selectPCById, (state, {id}) => {

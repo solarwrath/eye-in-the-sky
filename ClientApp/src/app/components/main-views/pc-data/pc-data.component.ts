@@ -23,7 +23,7 @@ export class PcDataComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    //this.hostElementRef.nativeElement.classList.add(this.pc.data.generalHealthStatus.toLowerCase());
+    this.hostElementRef.nativeElement.classList.add(this.pc.data.GeneralHealthStatus.toLowerCase());
   }
 
   @HostListener('click')
