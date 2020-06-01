@@ -57,9 +57,7 @@ namespace KURSACH.Hubs
         }
 
         public async Task RegisterClient()
-        {
-           await Clients.Caller.SendAsync("logMessage", "yupppp");
-
+        {            
             Dictionary<int, double> cpuLoad = new Dictionary<int, double>();
             cpuLoad.Add(1, 0.3);
             cpuLoad.Add(2, 0.2);
@@ -68,9 +66,9 @@ namespace KURSACH.Hubs
             {
                 ClientInfo = new ClientInfo
                 {
-                    Campus = 1,
-                    Floor = 2,
-                    Room = 3,
+                    Campus = "Головний",
+                    Floor = "Перший",
+                    Room = "Хз",
                     ClientName = "Desktop-12345",
                     HardwareInfo = new HardwareInfo
                     {

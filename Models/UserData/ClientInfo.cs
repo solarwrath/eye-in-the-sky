@@ -9,8 +9,8 @@ namespace KURSACH.Models.UserData
     {
         public HardwareInfo HardwareInfo { get; set; }
         public string ClientName { get; set; }
-        public int Campus { get; set; }
-        public int Floor { get; set; }
-        public int Room { get; set; }
+        public string Campus { get; set; }
+        public string Floor { get; set; }
+        public string Room { get; set; }
     }
 }

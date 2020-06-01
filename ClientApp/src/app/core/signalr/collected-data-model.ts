@@ -1,12 +1,10 @@
-// TODO Change this
-
 export interface CollectedData {
   ClientInfo: {
+    ClientName: string,
+    Campus: string,
+    Floor: string,
+    Room: string,
     HardwareInfo: {
-      ClientName: string,
-      Campus: string,
-      Floor: string,
-      Room: string,
       cpuLoad: {
         [key: string]: number,
       },
