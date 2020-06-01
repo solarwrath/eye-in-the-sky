@@ -5,7 +5,7 @@ import {addCampus} from './core/store/campus/campus.actions';
 import {Campus} from './core/models/campus.model';
 import {addFloor} from './core/store/floor/floor.actions';
 import {addRoom} from './core/store/room/room.actions';
-import {addPC} from './core/store/pc/pc.actions';
+import {addPC, updatePCData} from './core/store/pc/pc.actions';
 import {animate, query, style, transition, trigger} from '@angular/animations';
 import {loginSucceeded} from './core/store/auth/auth.actions';
 import {GeneralHealthStatus} from './core/models/pc.model';
@@ -173,5 +173,15 @@ export class AppComponent implements OnInit {
         }
       })
     );
+
+    setTimeout(() => {
+      this.store.dispatch(updatePCData({
+        clientName: 'pcaNdsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssame',
+        newData: {
+          pcName: 'zulul',
+          generalHealthStatus: GeneralHealthStatus.WARNING,
+        },
+      }));
+    }, 10000);
   }
 }
