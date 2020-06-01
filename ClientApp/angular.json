@@ -69,7 +69,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "eye-in-the-sky:build"
+            "browserTarget": "eye-in-the-sky:build",
+            "progress":  true
           },
           "configurations": {
             "production": {
