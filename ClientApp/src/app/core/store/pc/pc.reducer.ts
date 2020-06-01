@@ -35,7 +35,7 @@ export const _pcReducer = createReducer(
   on(PCActions.selectPCByName, (state, {pcName}) => {
     return {
       ...state,
-      selectedPC: state.pcs.find(pc => pc.pcName === pcName),
+      selectedPC: state.pcs.find(pc => pc.data.pcName === pcName),
     };
   }),
   on(PCActions.deselectPC, (state) => {
